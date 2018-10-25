@@ -2,15 +2,111 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a9974d4-6d0f-4b63-96ed-55aac51d537f" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.babelrc" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/camy-com.iml" />
       <change beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/root.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.watchmanconfig" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/App.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/icon.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/addd.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/addwhite.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/alert.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/batc.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/bg.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/camera.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/carts.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/cashb.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/cashd.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/cat1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/cat2.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catcam.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catfinger.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/cathome.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catintercom.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catlock.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catmaint.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catsignal.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catsound.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/catvich.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/chatlogo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/creditb.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/creditd.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dcart.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dcart1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dhome.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dhome1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dhomee.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dmaint.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dmaint1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/done.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/drop-2.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/drop-3.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/drop-4.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/drop-5.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dsales.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dsales1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dsearch.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/dsearch1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/fav1.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/fav2.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/favcart.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/favrecyc.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/list.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/loglogo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/logooo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/logpass.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/logtransback.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/loguser.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/poster.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/profemail.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/proflocation.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/profname.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/profpass.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/profphone.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/share.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sideabout.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidebackpattern.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidecart.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidecat.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sideconver.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidecopon.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidefav.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidelogout.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidemyorders.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sideprof.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/siderate.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sidesettings.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/sideshare.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/slider-2.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/slider-4.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/star.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/thank.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/thank_en.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/upcart.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/upericon.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/images/upsearh.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/assets/splash.png" />
       <change beforePath="" afterPath="$PROJECT_DIR$/local/i18n.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/package.json" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/actions/AuthAction.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/actions/CartAction.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/actions/LangAction.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/actions/LikeAction.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/actions/index.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/common/Background.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/common/Button.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/common/Card.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/common/CardItem.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/common/Input.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/common/Spinner.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/common/index.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/components/About.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/components/AuthLoader.js" />
       <change beforePath="" afterPath="$PROJECT_DIR$/src/components/AuthStack.js" />
@@ -472,12 +568,12 @@
       <workItem from="1540195007525" duration="13034000" />
       <workItem from="1540312186419" duration="3853000" />
       <workItem from="1540373146325" duration="31000" />
-      <workItem from="1540457891544" duration="216000" />
+      <workItem from="1540457891544" duration="256000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="796200000" />
+    <option name="totallyTimeSpent" value="796240000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="26" width="1366" height="741" extended-state="6" />
