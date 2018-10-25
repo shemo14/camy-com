@@ -1,0 +1,42 @@
+{
+  "name": "empty-project-template",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "ex-react-native-i18n": "0.0.4",
+    "expo": "^29.0.0",
+    "native-base": "^2.8.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.3.1",
+    "react-base": "^0.2.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
+    "react-native-easy-grid": "^0.2.0",
+    "react-native-i18n": "^2.0.15",
+    "react-native-image-picker": "^0.26.10",
+    "react-native-keyboard-aware-scroll-view": "^0.7.2",
+    "react-native-linear-gradient": "^2.4.2",
+    "react-native-local-storage": "^1.5.2",
+    "react-native-modal": "^6.5.0",
+    "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-root-modal": "^3.1.1",
+    "react-native-search-filter": "^0.1.4",
+    "react-native-shadow": "^1.2.2",
+    "react-native-snap-carousel": "^3.7.2",
+    "react-native-swiper": "^1.5.13",
+    "react-navigation": "^2.12.1",
+    "react-redux": "^5.0.7",
+    "react-time-input": "0.0.19",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "time-input": "^1.6.1",
+    "toggle-switch-react-native": "^2.0.2",
+    "validate.js": "^0.12.0"
+  }
+}
