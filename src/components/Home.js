@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, SafeAreaView, Image, Animated, BackHandler, BackAndroid } from 'react-native';
+import { ScrollView, SafeAreaView, Image, Animated, BackHandler, AsyncStorage } from 'react-native';
 import Slider from './HomeSlider';
 import HomeOffers from './HomeOffers';
 import Brands from './Brands';
@@ -9,6 +9,8 @@ import CategoriesProducts from './CategoriesProducts';
 import { Footer, FooterTab, Button, Icon, Header, Left, Body, Container, Right, Content } from 'native-base';
 import I18n from '../../local/i18n';
 import axios from 'axios';
+import Expo, {Notifications, Permissions} from "expo";
+
 
 
 class Home extends Component {
@@ -36,7 +38,42 @@ class Home extends Component {
         BackHandler.addEventListener('hardwareBackPress', function() {
             BackHandler.exitApp();
         });
+
+        console.log(Expo.Constants.deviceId);
     }
+
+    componentDidMount(){
+        this.registerForPushNotificationsAsync();
+    }
+
+    registerForPushNotificationsAsync = async () => {
+        const { status: existingStatus } = await Permissions.getAsync(
+            Permissions.NOTIFICATIONS
+        );
+        let finalStatus = existingStatus;
+
+        if (existingStatus !== 'granted') {
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            return;
+        }
+
+        try{
+            const token = await Notifications.getExpoPushTokenAsync();
+            AsyncStorage.getItem('user_id').then(user_id => {
+               axios.post('https://shams.arabsdesign.com/camy/api/setDeviceId', {user_id, device_id: token})
+                    .then(response => console.log( response.data.msg ))
+                    .catch(error => console.log(error));
+            });
+
+        }catch(e) {
+            console.log('Error of notification pusher', e);
+        }
+
+    };
+
 
     setAnimate(){
         if (this.state.availabel === 1){
@@ -61,7 +98,6 @@ class Home extends Component {
     }
 
     render () {
-        console.log(I18n.locale);
         return (
             <Container>
                 <Header style={{ height: 70, backgroundColor: '#fff', paddingTop: 20, borderBottomWidth:1, borderBottomColor: '#eee'}}>
@@ -116,6 +152,4 @@ class Home extends Component {
         );
     }
 }
-
-
 export default Home;

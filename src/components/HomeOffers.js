@@ -88,6 +88,7 @@ const offerStyles = {
         fontSize: 20,
         color: '#828391',
         marginBottom: 5,
+        textAlign: I18n.locale === 'en' ? 'left' : 'right'
     },
     productNameStyle: {
         color : '#a5a5a5'

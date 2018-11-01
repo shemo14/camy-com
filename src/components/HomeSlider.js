@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Platform, ScrollView } from 'react-native';
+import { View, Platform, ScrollView, Text } from 'react-native';
 import styles from '../styles/index.style';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth  } from '../styles/style.style';
 import SliderEntry from './SliderEntry';
 import axios from 'axios';
+import { Button } from 'native-base';
+import I18n from '../../local/i18n';
 
 
 const IS_ANDROID = Platform.OS === 'android';
@@ -72,6 +74,12 @@ class HomeSlider extends Component{
                     carouselRef={this._slider1Ref}
                     tappableDots={!!this._slider1Ref}
                 />
+                <Button style={{ backgroundColor: '#020f31', position: 'absolute', height: 35, top: 10, right: 10, padding: 5 }}>
+                    <Text style={{ color: '#fff' }}>{ I18n.t('seeAll') }</Text>
+                </Button>
+                <Button style={{ backgroundColor: '#ebf2fd', position: 'absolute', bottom: 10, height: 35, right: 10, padding: 5 }}>
+                    <Text>{ I18n.t('topOffers') }</Text>
+                </Button>
             </View>
         );
     }

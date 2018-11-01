@@ -23,13 +23,28 @@ import AuthLoader from './AuthLoader';
 import OrderDetails from './OrderDetails';
 import DrawerNavigator from './DrawerNvigator';
 import I18n from 'ex-react-native-i18n';
+import CameraScreen from "./Camera";
 
 AsyncStorage.getItem('lang').then(lang => I18n.locale = lang);
 console.log('Root lang ',I18n.locale );
 
 import { createStackNavigator } from 'react-navigation';
+import OfferBanars from "./OfferBanars";
+
 
 export default createStackNavigator({
+    offerBanars: {
+        screen: OfferBanars,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    home: {
+        screen: Home,
+        navigationOptions: {
+            header: null,
+        }
+    },
     login: {
         screen: Login,
         navigationOptions: {
@@ -38,12 +53,6 @@ export default createStackNavigator({
     },
     signUp: {
         screen: SignUp,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    home: {
-        screen: Home,
         navigationOptions: {
             header: null,
         }
@@ -102,12 +111,6 @@ export default createStackNavigator({
             header: null,
         }
     },
-    maintenanceRequest: {
-        screen: MaintenanceRequest,
-        navigationOptions: {
-            header: null,
-        }
-    },
     products: {
         screen: Products,
         navigationOptions: {
@@ -146,6 +149,18 @@ export default createStackNavigator({
     },
     settings: {
         screen: Settings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    camera: {
+        screen: CameraScreen,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    maintenanceRequest: {
+        screen: MaintenanceRequest,
         navigationOptions: {
             header: null,
         }

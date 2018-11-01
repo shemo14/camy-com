@@ -7,6 +7,7 @@ import reducers from './src/reducers';
 import RootStack from './src/components/RootStack';
 import { Root } from "native-base";
 import { I18nManager } from 'react-native';
+import { DangerZone } from 'expo';
 import I18n from './local/i18n';
 
 AsyncStorage.getItem('lang').then(lang => {
@@ -20,6 +21,8 @@ AsyncStorage.getItem('lang').then(lang => {
     }
 });
 
+
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -30,28 +33,25 @@ export default class App extends React.Component {
         lang: 'en'
     };
 
-    async componentWillMount() {
-        const lang = await AsyncStorage.getItem('lang');
-
-        if (lang === 'ar') {
-            I18nManager.forceRTL(true);
-        } else if (lang === 'en') {
-            I18nManager.forceRTL(false);
-        }
-
-        I18n.locale = lang;
+    componentWillMount() {
+        AsyncStorage.getItem('lang').then((value) => {
+            if (value === 'ar') {
+                I18nManager.forceRTL(true);
+            } else {
+                I18nManager.forceRTL(false);
+            }
+            // return this.setState({ lang: value });
+        }).done();
     }
 
 
     render() {
-        I18n.locale = this.state.lang;
         return (
             <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
                 <Root>
                     <RootStack lang={this.state.lang}/>
                 </Root>
             </Provider>
-
         );
     }
 }

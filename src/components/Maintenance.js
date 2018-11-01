@@ -28,8 +28,8 @@ class Offers extends Component{
     renderMains(){
         return this.state.mains.map(main => {
             return (
-                <Button key={main.id} block style={{ marginTop: 20 }} onPress={() => this.props.navigation.navigate('maintenanceRequest', { main })}>
-                    <Text style={{ color: '#fff', fontSize: 17, fontWeight: 'bold' }}>{ main.name }</Text>
+                <Button key={main.id} block style={{ marginTop: 25, backgroundColor: '#020f31' }} onPress={() => this.props.navigation.navigate('maintenanceRequest', { main })}>
+                    <Text style={{ color: '#fff', fontSize: 18 }}>{ main.name }</Text>
                 </Button>
             );
         })
@@ -48,7 +48,7 @@ class Offers extends Component{
                         <Text style={{fontSize: 18, color: '#999', textAlign: 'center'}}>{ I18n.t('maintenance') }</Text>
                     </Body>
                 </Header>
-                <Content style={{ padding: 10 }}>
+                <Content style={{ paddingRight: 20, paddingLeft: 20, }}>
                     <Loader loading={this.state.loading} />
                     { this.renderMains() }
                 </Content>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, Text, Image, FlatList, AsyncStorage } from 'react-native';
-import { Container, Header, Content, Button, Icon, Body, Left, Picker, Footer, FooterTab } from 'native-base';
+import { Container, Header, Content, Button, Icon, Picker, Body, Left, Footer, FooterTab } from 'native-base';
 import axios from 'axios';
 import I18n from "../../local/i18n";
 import Loader from './Loader';
@@ -19,7 +19,8 @@ class Products extends Component{
             products: [],
             selectedSubcategory: '',
             selectedBrands: '',
-            selectedTags: ''
+            selectedTags: '',
+            selectedOption: '',
         }
     }
 
@@ -94,30 +95,31 @@ class Products extends Component{
                 </Header>
                 <Content>
                     <Loader loading={this.state.loading} />
-                    <View style={{ padding: 12, backgroundColor: '#f9f8f8', flex: 1, flexDirection: 'row' }}>
-                        <View style={{ flex: 1, borderRadius: 20, borderWidth: 1, borderColor: '#ddd', height: 40, margin: 5}}>
+
+                    <View style={{ paddingTop: 12, paddingBottom: 12, backgroundColor: '#f9f8f8', flex: 1, flexDirection: 'row' }}>
+                        <View style={{ flex: 1, borderRadius: 20, borderWidth: 1, borderColor: '#ddd', height: 40, margin: 1, overflow: 'hidden', paddingRight: 10}}>
                             <Picker
                                 note
-                                mode="dropdown"
-                                style={{ color: '#7b7c8c', height: 30, margin: 5 }}
+                                mode="dialog"
+                                style={{ color: '#7b7c8c', height: 30, margin: 5, backgroundColor: '#f9f8f8', overflow: 'hidden' }}
                                 selectedValue={this.state.selectedSubcategory}
                                 onValueChange={(value) => {
                                     this.setState({ selectedSubcategory: value });
                                     this.onFilter(value, this.state.selectedBrands, this.state.selectedTags);
-                                } }
-                                itemStyle={{ flex: 1 }}
-                                itemTextStyle={{ flex: 1 ,textAlign: 'center' }}
+                                }}
+                                itemStyle={{ flex: 1, width: 150, textAlign: 'right', marginLeft: 0 }}
+                                itemTextStyle={{ flex: 1 ,textAlign: 'center', width: 150, fontSize: 10, marginLeft: 0 }}
                             >
-                                <Picker.Item label={I18n.t('subcategories')} value="" />
+                                <Picker.Item style={{ textAlign: 'right' }} label={I18n.t('subcategories')} value="" />
                                 { this.renderSubCategory() }
                             </Picker>
                         </View>
 
-                        <View style={{ flex: 1, borderRadius: 20, borderWidth: 1, borderColor: '#ddd', height: 40, margin: 5}}>
+                        <View style={{ flex: 1, borderRadius: 20, borderWidth: 1, borderColor: '#ddd', height: 40, margin: 1, overflow: 'hidden', paddingRight: 10}}>
                             <Picker
                                 note
-                                mode="dropdown"
-                                style={{ color: '#7b7c8c', height: 30, margin: 5 }}
+                                mode="dialog"
+                                style={{ color: '#7b7c8c', height: 30, margin: 5, backgroundColor: '#f9f8f8', overflow: 'hidden', marginRight: 30 }}
                                 selectedValue={this.state.selectedBrands}
                                 onValueChange={(value) => {
                                     this.setState({ selectedBrands: value });
@@ -131,11 +133,11 @@ class Products extends Component{
                             </Picker>
                         </View>
 
-                        <View style={{ flex: 1, borderRadius: 20, borderWidth: 1, borderColor: '#ddd', height: 40, margin: 5}}>
+                        <View style={{ flex: 1, borderRadius: 20, borderWidth: 1, borderColor: '#ddd', height: 40, margin: 1, overflow: 'hidden' }}>
                             <Picker
                                 note
-                                mode="dropdown"
-                                style={{ color: '#7b7c8c', height: 30, margin: 5 }}
+                                mode="dialog"
+                                style={{ color: '#7b7c8c', height: 30, margin: 5, backgroundColor: '#f9f8f8', overflow: 'hidden', marginRight: 30 }}
                                 selectedValue={this.state.selectedTags}
                                 onValueChange={(value) => {
                                     this.setState({ selectedTags: value });

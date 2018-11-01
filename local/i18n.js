@@ -80,6 +80,14 @@ I18n.translations = {
         'chooseTime' : 'Choose Time',
         'save' : 'Save',
         'dateTime' : 'Choose Date and Time',
+        'seeAll': 'See All',
+        'topOffers': 'Top Offers',
+        'send': 'Send',
+        'mainRequest' : 'Maintenance Request sent Successfully',
+        'shareWithFriends' : 'Share With Friends',
+        'rateUs' : 'Rate Us',
+        'chat': 'Chat',
+        'welcome': 'Welcome'
     },
     ar: {
         'login': 'تسجيل دخول',
@@ -158,6 +166,14 @@ I18n.translations = {
         'chooseTime' : 'اختر الوقت',
         'save' : 'حفظ',
         'dateTime' : 'اختر وقت و تاريخ الصيانة',
+        'seeAll': 'كل المنتجات',
+        'topOffers': 'كل العروض',
+        'send': 'ارسال',
+        'mainRequest' : 'تم ارسال طلب الصيانة بنجاح',
+        'shareWithFriends' : 'مشاركة مع اصدقائك',
+        'rateUs' : 'تقيم التطبيق',
+        'chat': 'المحادثة',
+        'welcome' : 'اهلا'
     }
 };
 
@@ -165,6 +181,7 @@ I18n.translations = {
 I18n.locale = 'en';
 
 AsyncStorage.getItem('lang').then(lang => {
+    console.log('this is lang : ', lang);
     I18n.locale = lang;
 });
 

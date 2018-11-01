@@ -34,7 +34,7 @@ class CartListItem extends Component{
                             <Icon name={'plus'} type={'Entypo'}/>
                         </TouchableOpacity>
                         <Input disabled style={styles.inputStyle} value={JSON.stringify(this.state.count)} onChangeText={(count) => this.setState({ count }) }/>
-                        <TouchableOpacity onPress={() => this.setState({ count: this.state.count-1 })}>
+                        <TouchableOpacity onPress={() => { this.state.count >= 1 ? this.setState({ count: this.state.count-1 }) : this.setState({ count: this.state.count }) }}>
                             <Icon name={'minus'} type={'Entypo'}/>
                         </TouchableOpacity>
                     </Col>

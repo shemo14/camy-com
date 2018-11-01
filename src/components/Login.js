@@ -47,6 +47,10 @@ class Login extends Component{
         }
     }
 
+    skipNavigations(){
+        this.props.navigation.navigate('drawerNavigator');
+    }
+
     validate = () => {
         let isError = false;
         const errors = {
@@ -79,8 +83,8 @@ class Login extends Component{
         }
 
         return (
-            <Button block style={{marginTop: 20}} onPress={() => { this.onLoginPressed()  }} primary>
-                <Text style={{color: '#fff', fontSize: 17, fontWeight: 'bold'}}>Login</Text>
+            <Button style={{marginTop: 20, backgroundColor: '#03133b', width: 170, alignSelf: 'center', borderRadius: 10, justifyContent: 'center'}} onPress={() => { this.onLoginPressed()  }} primary>
+                <Text style={{color: '#fff', fontSize: 17, textAlign: 'center'}}>Login</Text>
             </Button>
         );
     }
@@ -123,17 +127,18 @@ class Login extends Component{
                                         <Input autoCapitalize='none' onChangeText={(password) => this.setState({password})} secureTextEntry placeholder={'Password ...'} value={this.state.password}/>
                                     </Item>
                                     <Text style={{ color: '#ff0000', textAlign: 'center', marginTop: 2 }}>{ this.state.passwordError }</Text>
-
+                                    {this.renderLoading()}
                                     <View style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
                                         <Text stle={{fontSize: 19}}>If you don't have account, <Text
                                             onPress={() => this.navigateToSignUp()}
                                             style={styles.signUp}>SignUp</Text></Text>
                                     </View>
-
-                                    {this.renderLoading()}
                                 </View>
                             </Form>
                         </KeyboardAvoidingView>
+                        {/*<Button onPress={() => this.skipNavigations() } style={{ backgroundColor: '#f2f6fa', alignSelf: 'flex-end', padding: 16, margin: 30, height: 33 }}>*/}
+                            {/*<Text>Skip</Text>*/}
+                        {/*</Button>*/}
                     </Background>
                 </Content>
             </Container>

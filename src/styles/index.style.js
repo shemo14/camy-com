@@ -73,12 +73,14 @@ export default StyleSheet.create({
     paginationContainer: {
         paddingVertical: 8,
         position: 'absolute',
+        bottom: 0
         // top: 200,
     },
     paginationDot: {
         width: 12,
         height: 12,
         borderRadius: 6,
-        marginHorizontal: 2,
+        marginHorizontal: 0,
+        bottom: 0,
     }
 });

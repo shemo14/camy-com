@@ -31,7 +31,7 @@ export default StyleSheet.create({
         width: offerWidth,
         height: 100,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#fff',
         borderRadius: 10,
         padding: 10,
         margin: 10,
@@ -58,11 +58,11 @@ export default StyleSheet.create({
         borderTopRightRadius: entryBorderRadius
     },
     imageContainerEven: {
-        backgroundColor: colors.black
+        backgroundColor: '#fff'
     },
     image: {
         ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
+        resizeMode: 'stretch',
         borderRadius: IS_IOS ? entryBorderRadius : 0,
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius

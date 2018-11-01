@@ -21,7 +21,7 @@ class Cart extends Component{
             productCounter: [],
             liked: false,
             loading: true,
-            installation: 0
+            installation: 0,
         };
 
         this.setDate = this.setDate.bind(this);
@@ -43,7 +43,14 @@ class Cart extends Component{
     componentWillMount(){
         AsyncStorage.getItem('user_id').then((user_id) => {
             axios.get('https://shams.arabsdesign.com/camy/api/userCart/' + I18n.locale + '/' + user_id )
-                .then(response => this.setState({ listViewData: response.data.products, total: response.data.total, loading: false, installation: response.data.installation }))
+                .then(response => {
+                    this.setState({
+                        listViewData: response.data.products,
+                        total: response.data.total,
+                        loading: false,
+                        installation: response.data.installation
+                    });
+                })
                 .catch(error => console.log(error));
         });
     }
@@ -75,6 +82,7 @@ class Cart extends Component{
             return (
                 <List
                     style={{height: 400, borderWidth: 1, borderBottomColor: '#999'}}
+                    leftOpenValue={75}
                     rightOpenValue={-75}
                     dataSource={this.ds.cloneWithRows(ListData)}
                     renderRow={data => <CartListItem setProductCounter={this.setProductCounter.bind(this)}
@@ -132,7 +140,7 @@ class Cart extends Component{
             this.setState({ isLiked: data });
             console.log(data, this.state.isLiked);
         };
-
+        console.log(this.state.listViewData);
         return(
             <Container>
                 <Header style={{ height: 70, backgroundColor: '#fff', paddingTop: 15, borderBottomWidth:1, borderBottomColor: '#eee'}}>
@@ -153,17 +161,16 @@ class Cart extends Component{
                         </Row>
                         <Row size={25}>
                             <View style={styles.buyContainer}>
-                                <View style={{ flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Body>
-                                        <Text style={{ color: '#000', fontWeight: '600' }}>{ I18n.t('addInstallation') } ({ this.state.installation } { I18n.t('sar') })</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 50, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Body style={{ flex: 0 }}>
+                                        <Text onPress={() => this.setInstallation()} style={{ color: '#000', fontWeight: '600', marginLeft: 10, marginRight: 10 }}>{ I18n.t('addInstallation') } ({ this.state.installation } { I18n.t('sar') })</Text>
                                     </Body>
-                                    <CheckBox style={{ borderRadius: 3, left: -85 }} checked={this.state.checked} onPress={() => this.setInstallation()} color="blue"/>
+                                    <CheckBox style={{ borderRadius: 3 }} checked={this.state.checked} onPress={() => this.setInstallation()} color="blue"/>
                                 </View>
                                 <DatePicker
-                                    defaultDate={new Date(2018, 4, 4)}
-                                    minimumDate={new Date(2018, 1, 1)}
-                                    maximumDate={new Date(2018, 12, 31)}
-                                    locale={"en"}
+                                    defaultDate={new Date()}
+                                    minimumDate={new Date()}
+                                    locale={I18n.locale}
                                     timeZoneOffsetInMinutes={undefined}
                                     modalTransparent={false}
                                     animationType={"fade"}
@@ -172,6 +179,7 @@ class Cart extends Component{
                                     textStyle={{ color: "green" }}
                                     placeHolderTextStyle={{ color: "#d3d3d3" }}
                                     onDateChange={this.setDate}
+                                    mode={'dateTime'}
                                 />
                                 <Button disabled={ this.state.listViewData.length > 0 ? false : true } onPress={() => this.setOrder()} style={{ alignSelf: 'center', marginTop: 10, width: 130, flex: 1, justifyContent: 'center', alignItems: 'center' }} light rounded>
                                     <Text style={{ textAlign: 'center' }}> { I18n.t('buy') } : { this.state.total } { I18n.t('sar') }</Text>

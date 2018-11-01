@@ -93,7 +93,7 @@ class HomeProduct extends Component{
                 <Loader loading={this.state.loading} />
                 <CardItem cardBody style={products.imageBkg}>
                     <TouchableOpacity style={{ top: -12 }} onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })} >
-                        <Image style={products.productImage} resizeMode={Image.resizeMode.center}
+                        <Image style={products.productImage} resizeMode={Image.resizeMode.stretch}
                                          source={{ uri: this.props.data.image }}/>
                     </TouchableOpacity>
                 </CardItem>
@@ -112,8 +112,8 @@ class HomeProduct extends Component{
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })}>
                             <Text style={products.productNameStyle}>{this.props.data.name}</Text>
                         </TouchableOpacity>
-                        <Text style={products.productPrice}>{this.props.data.price} { I18n.t('sar') }</Text>
-                        <Text style={products.productDiscount}>{this.props.data.discount} { I18n.t('sar') }</Text>
+                        <Text style={products.productPrice}>{ this.props.data.discount } { I18n.t('sar') }</Text>
+                        <Text style={products.productDiscount}>{ this.props.data.price } { I18n.t('sar') }</Text>
                     </View>
                 </CardItem>
                 <CardItem>
@@ -285,10 +285,9 @@ const products = {
         marginRight: 0,
     },
     productCard: {
-        // width: '50%',
+        width: 150,
         flex: 1,
         borderRadius: 10
-
     },
     imageBkg: {
         borderTopLeftRadius: 10,

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "29638349939",
+    "firebase_url": "https://camy-com.firebaseio.com",
+    "project_id": "camy-com",
+    "storage_bucket": "camy-com.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29638349939:android:eec5c1e07e0319cd",
+        "android_client_info": {
+          "package_name": "camy.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29638349939-6jocsrtl5nu6d49d8jhg32n91ofnse3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwTEMemXlA3B1Xhm33c0JBdsJdq05tuXc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

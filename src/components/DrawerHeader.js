@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, View, ImageBackground, Text, AsyncStorage, TouchableOpacity } from 'react-native';
+import {Image, View, ImageBackground, Text, AsyncStorage, TouchableOpacity, Share, Linking} from 'react-native';
 import { Container, Header, Content, Body} from 'native-base';
 import { DrawerItems } from 'react-navigation';
 import axios from 'axios';
@@ -19,6 +19,19 @@ class DrawerHeader extends Component {
                                           .then(response => this.setState({ user: response.data.user })))
     }
 
+    onShare (){
+        Share.share({
+            title: 'Camy.Com Application',
+            url: 'https://shams.arabsdesign.com/camy',
+            message: 'this is great app visit web site on : https://shams.arabsdesign.com/camy'
+        }, {
+            dialogTitle: 'share our app with your friends',
+            excludedActivityTypes: [
+                'com.apple.UIKit.activity.PostToTwitter'
+            ]
+        })
+    };
+
     render(){
         return(
             <Container>
@@ -27,7 +40,7 @@ class DrawerHeader extends Component {
                     <ImageBackground resizeMode='cover' style={styles.drawerImage} source={require('../../assets/images/sidebackpattern.png')}>
                         <View style={styles.profileContainer}>
                             <Image style={styles.profileImage} source={{ uri: this.state.user.avatar }} />
-                            <Text style={styles.welcomeText}>Welcome</Text>
+                            <Text style={styles.welcomeText}>{ I18n.t('welcome') }</Text>
                             <View style={styles.authContainer}>
                                 <Text onPress={() => this.props.navigation.navigate('profile')} style={styles.usernameText}>{ this.state.user.name }</Text>
                                 <View style={styles.logoutContainer} onPress={() => console.log('ops')}>
@@ -42,7 +55,19 @@ class DrawerHeader extends Component {
                     </Body>
                 </Header>
                 <Content>
-                    <DrawerItems {...this.props} />
+                    <DrawerItems {...this.props} onItemPress={
+                        ( route, focused ) => {
+                            if (route.route.key === 'share'){
+                                this.onShare()
+                            }else if(route.route.key === 'rate'){
+                                Linking.openURL('https://play.google.com/store/apps/details?id=com.tencent.ig')
+                            }else if(route.route.key === 'chat'){
+                                console.log('chat');
+                            }else{
+                                this.props.navigation.navigate(route.route.key);
+                            }
+                        }
+                    } />
                 </Content>
             </Container>
         );

@@ -66,7 +66,7 @@ class OfferDetails extends Component{
         return(
             <View style={offerStyles.offersContainers}>
                 <View style={offerStyles.offerImageContainer}>
-                    <TouchableOpacity style={{ top: -12 }} onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })} >
+                    <TouchableOpacity style={{ top: 0 }} onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })} >
                         <Image style={offerStyles.offerImage} resizeMode={Image.resizeMode.center}
                                source={{ uri: this.props.data.image }}/>
                     </TouchableOpacity>
@@ -83,8 +83,8 @@ class OfferDetails extends Component{
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })}>
                         <Text style={offerStyles.productNameStyle}>{ this.props.data.name }</Text>
                     </TouchableOpacity>
-                    <Text style={offerStyles.productPrice}>{ this.props.data.price } { I18n.t('sar') }</Text>
-                    <Text style={offerStyles.productDiscount}>{ this.props.data.discount } { I18n.t('sar') }</Text>
+                    <Text style={offerStyles.productPrice}>{ this.props.data.discount } { I18n.t('sar') }</Text>
+                    <Text style={offerStyles.productDiscount}>{ this.props.data.price } { I18n.t('sar') }</Text>
                 </View>
             </View>
         );
@@ -100,6 +100,7 @@ const offerStyles = {
         width: 150,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
+        top: -11
     },
     iconContainer: {
         flex: 1,
@@ -150,7 +151,9 @@ const offerStyles = {
 
     },
     productDiscount: {
-        color : '#ce8285'
+        color : '#ce8285',
+        textDecorationLine: 'line-through',
+        textDecorationStyle: 'solid'
     },
     textContainer: {
         paddingLeft: 10,
@@ -159,6 +162,8 @@ const offerStyles = {
     },
     offersContainers: {
         margin: 5,
+        flex: 1,
+        width: 150,
     },
     brandContainers: {
         margin: 5,

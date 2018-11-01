@@ -13,6 +13,8 @@ import Orders from './Orders';
 import { Icon } from 'native-base';
 import I18n from '../../local/i18n';
 import {changeLang} from "../actions";
+import Share from "./Share";
+import Rate from "./Rate";
 
 const lang = '';
 
@@ -24,15 +26,36 @@ const DrawerNavigator = createDrawerNavigator({
         home: Home,
         profile: Profile,
         cart: Cart,
+        chat: {
+            screen: Share,
+            navigationOptions: {
+                drawerLabel: I18n.t('chat'),
+                drawerIcon: ( <Icon style={{ fontSize: 24 }} type='Ionicons' name='ios-chatbubbles' /> )
+            }
+        },
         orders: Orders,
         favorites: Favorites,
+        share: {
+            screen: Share,
+            navigationOptions: {
+                drawerLabel: I18n.t('shareWithFriends'),
+                drawerIcon: ( <Icon style={{ fontSize: 24 }} type='Feather' name='share-2' /> )
+            }
+        },
+        rate: {
+            screen: Rate,
+            navigationOptions: {
+                drawerLabel: I18n.t('rateUs'),
+                drawerIcon: ( <Icon style={{ fontSize: 24 }} type='FontAwesome' name='star'/> )
+            }
+        },
         maintenance: Maintenance,
         about: About,
         settings: Settings,
     },
     {
         initialRouteName: 'home',
-        // drawerPosition: locale === 'en' ? 'left' : 'right',
+        drawerPosition: I18n.locale === 'en' ? 'right' : 'left',
         contentComponent: CustomDrawerContentComponent,
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
