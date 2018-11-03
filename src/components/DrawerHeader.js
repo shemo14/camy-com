@@ -4,6 +4,7 @@ import { Container, Header, Content, Body} from 'native-base';
 import { DrawerItems } from 'react-navigation';
 import axios from 'axios';
 import I18n from '../../local/i18n';
+import { connect } from 'react-redux'
 
 class DrawerHeader extends Component {
     constructor(props){
@@ -15,8 +16,19 @@ class DrawerHeader extends Component {
 
     componentWillMount(){
         AsyncStorage.getItem('user_id')
-                    .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/userData/' + user_id)
-                                          .then(response => this.setState({ user: response.data.user })))
+                    .then(user_id => {
+                        axios.get('https://shams.arabsdesign.com/camy/api/userData/' + user_id)
+                            .then(response => this.setState({ user: response.data.user }))
+                            .catch((e) => {
+                                console.log('this is error ', e);
+                                this.setState({ user: {
+                                        name: 'guest',
+                                        avatar: 'https://shams.arabsdesign.com/camy/dashboard/uploads/users/default.png',
+                                        guest: true
+                                    } })
+                            })
+                    })
+                    .catch((e) => console.log(e))
     }
 
     onShare (){
@@ -33,6 +45,8 @@ class DrawerHeader extends Component {
     };
 
     render(){
+        const { user } = this.props;
+        console.log('this is user', user);
         return(
             <Container>
                 <Header style={styles.drawerHeader}>
@@ -56,18 +70,20 @@ class DrawerHeader extends Component {
                 </Header>
                 <Content>
                     <DrawerItems {...this.props} onItemPress={
-                        ( route, focused ) => {
-                            if (route.route.key === 'share'){
-                                this.onShare()
-                            }else if(route.route.key === 'rate'){
-                                Linking.openURL('https://play.google.com/store/apps/details?id=com.tencent.ig')
-                            }else if(route.route.key === 'chat'){
-                                console.log('chat');
-                            }else{
-                                this.props.navigation.navigate(route.route.key);
+                            ( route, focused ) => {
+                                if (route.route.key === 'share'){
+                                    this.onShare()
+                                }else if(route.route.key === 'rate'){
+                                    Linking.openURL('https://play.google.com/store/apps/details?id=com.tencent.ig')
+                                }else if(route.route.key === 'chat'){
+                                    console.log('chat');
+                                }else{
+                                    this.props.navigation.navigate(route.route.key);
+                                }
                             }
                         }
-                    } />
+                        items={this.state.user.guest ? this.props.items.filter((item) => item.routeName !== 'profile' && item.routeName !== 'cart' && item.routeName !== 'favorites' && item.routeName !== 'orders') : this.props.items }
+                    />
                 </Content>
             </Container>
         );
@@ -130,4 +146,10 @@ const styles = {
     },
 };
 
-export default DrawerHeader;
+const mapTOState = ({ auth }) => {
+    return {
+        user: auth.user,
+    };
+};
+
+export default connect(mapTOState)(DrawerHeader);

@@ -87,7 +87,8 @@ I18n.translations = {
         'shareWithFriends' : 'Share With Friends',
         'rateUs' : 'Rate Us',
         'chat': 'Chat',
-        'welcome': 'Welcome'
+        'welcome': 'Welcome',
+        'plzLogin': 'please, login first'
     },
     ar: {
         'login': 'تسجيل دخول',
@@ -173,7 +174,8 @@ I18n.translations = {
         'shareWithFriends' : 'مشاركة مع اصدقائك',
         'rateUs' : 'تقيم التطبيق',
         'chat': 'المحادثة',
-        'welcome' : 'اهلا'
+        'welcome' : 'اهلا',
+        'plzLogin': 'الرجاء تسجيل الدخول اولا'
     }
 };
 

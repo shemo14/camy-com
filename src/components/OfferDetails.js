@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Share, Text, Image, TouchableOpacity, AsyncStorage } from 'react-native';
-import { Icon } from 'native-base';
+import { Icon, Toast } from 'native-base';
 import { connect }  from 'react-redux';
 import { Like } from '../actions'
 import I18n from '../../local/i18n';
+import Expo from "expo";
 
 class OfferDetails extends Component{
     constructor(props){
@@ -11,22 +12,45 @@ class OfferDetails extends Component{
         this.state = {
             isLiked: this.props.liked,
             dislikeIcon: 'heart-o',
-            likeIcon: 'heart'
+            likeIcon: 'heart',
+            showToast: false,
+            user_id: ''
         };
         this.onPressLike = this.onPressLike.bind(this);
     }
 
+    async componentWillMount(){
+        await Expo.Font.loadAsync({
+            Roboto: require("native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+            Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf"),
+        });
+
+        await AsyncStorage.getItem('user_id').then(user_id => {
+            this.setState({ user_id })
+        })
+    }
+
     onPressLike(product_id){
-        if (this.state.isLiked){
-            this.refs[product_id].setNativeProps({ style: {color: '#c0c0bf'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
+        if(this.state.user_id !== '' && this.state.user_id !== null){
+            if (this.state.isLiked){
+                this.refs[product_id].setNativeProps({ style: {color: '#c0c0bf'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
 
-            this.setState({ isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o' });
+                this.setState({ isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o' });
+            }else{
+                this.refs[product_id].setNativeProps({ style: {color: '#d34b52'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
+
+                this.setState({ isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart' });
+            }
         }else{
-            this.refs[product_id].setNativeProps({ style: {color: '#d34b52'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
-
-            this.setState({ isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart' });
+            Toast.show({
+                text: I18n.t('plzLogin'),
+                type: "danger",
+                buttonText: I18n.t('login'),
+                duration: 5000
+            });
         }
 
         console.log(this.state.isLiked);

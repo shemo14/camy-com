@@ -24,12 +24,6 @@ class Login extends Component{
     }
 
     componentWillMount(){
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            // console.log(user_id);
-            if (user_id !== null){
-                this.props.navigation.navigate('drawerNavigator')
-            }
-        });
         AsyncStorage.getItem('lang').then((lang) => I18n.locale = lang);
 
         console.log('LoginLang', I18n.locale);
@@ -136,63 +130,13 @@ class Login extends Component{
                                 </View>
                             </Form>
                         </KeyboardAvoidingView>
-                        {/*<Button onPress={() => this.skipNavigations() } style={{ backgroundColor: '#f2f6fa', alignSelf: 'flex-end', padding: 16, margin: 30, height: 33 }}>*/}
-                            {/*<Text>Skip</Text>*/}
-                        {/*</Button>*/}
+                        <Button onPress={() => this.skipNavigations() } style={{ backgroundColor: '#f2f6fa', alignSelf: 'flex-end', padding: 16, margin: 30, height: 33 }}>
+                            <Text>Skip</Text>
+                        </Button>
                     </Background>
                 </Content>
             </Container>
         );
-
-        // return(
-        //     <Container>
-        //         <Content contentContainerStyle={{flexGrow: 1}}>
-        //             <Background>
-        //                 <KeyboardAvoidingView behavior="position">
-        //                     <View style={{justifyContent: 'center', alignItems: 'center', height: 200}}>
-        //                         <Image resizeMode={Image.resizeMode.center} style={{ width: 200, height: 200 }} source={{ uri: 'http://shams.arabsdesign.com/camy/app_resources/loglogo.png' }} />
-        //                     </View>
-        //                     <Form>
-        //                         <View style={{flex: 2, padding: 30}}>
-        //                             <Item error floatingLabel style={{
-        //                                 flexDirection: 'row',
-        //                                 borderBottomWidth: 1,
-        //                                 borderBottomColor: this.state.emailError === '' ? '#ddd' : '#ff0000' ,
-        //                                 padding: 3
-        //                             }}>
-        //                                 <Icon style={{color: '#5e5e7c', fontSize: 40}} name={'user'} type={'EvilIcons'}/>
-        //                                 <Label style={{marginRight: 10, marginLeft: 10}}>Email</Label>
-        //                                 <Input autoCapitalize='none' onChangeText={(email) => this.setState({email})} value={this.state.email}/>
-        //                             </Item>
-        //                             <Text style={{ color: '#ff0000', textAlign: 'center', marginTop: 2 }}>{ this.state.emailError }</Text>
-        //
-        //                             <Item floatingLabel style={{
-        //                                 flexDirection: 'row',
-        //                                 borderBottomWidth: 1,
-        //                                 borderBottomColor: this.state.emailError === '' ? '#ddd' : '#ff0000' ,
-        //                                 padding: 3
-        //                             }}>
-        //                                 <Icon style={{color: '#5e5e7c', fontSize: 40}} name={'lock'} type={'EvilIcons'}/>
-        //                                 <Label style={{marginRight: 10, marginLeft: 10}}>Password</Label>
-        //                                 <Input autoCapitalize='none' onChangeText={(password) => this.setState({password})} secureTextEntry
-        //                                        value={this.state.password}/>
-        //                             </Item>
-        //                             <Text style={{ color: '#ff0000', textAlign: 'center', marginTop: 2 }}>{ this.state.passwordError }</Text>
-        //
-        //                             <View style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
-        //                                 <Text stle={{fontSize: 19}}>If you don't have account, <Text
-        //                                     onPress={() => this.navigateToSignUp()}
-        //                                     style={styles.signUp}>SignUp</Text></Text>
-        //                             </View>
-        //
-        //                             {this.renderLoading()}
-        //                         </View>
-        //                     </Form>
-        //                 </KeyboardAvoidingView>
-        //             </Background>
-        //         </Content>
-        //     </Container>
-        // );
     }
 }
 

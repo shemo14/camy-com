@@ -55,7 +55,7 @@ const DrawerNavigator = createDrawerNavigator({
     },
     {
         initialRouteName: 'home',
-        drawerPosition: I18n.locale === 'en' ? 'right' : 'left',
+        drawerPosition: I18n.locale === 'en' ? 'left' : 'right',
         contentComponent: CustomDrawerContentComponent,
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',

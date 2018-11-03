@@ -33,8 +33,8 @@ import OfferBanars from "./OfferBanars";
 
 
 export default createStackNavigator({
-    offerBanars: {
-        screen: OfferBanars,
+    drawerNavigator: {
+        screen: DrawerNavigator,
         navigationOptions: {
             header: null,
         }
@@ -165,12 +165,12 @@ export default createStackNavigator({
             header: null,
         }
     },
-    drawerNavigator: {
-        screen: DrawerNavigator,
+    offerBanars: {
+        screen: OfferBanars,
         navigationOptions: {
             header: null,
         }
-    },
+    }
 },{
     gesturesEnabled: false,
 });

@@ -24,6 +24,8 @@ const handelLogin = (dispatch, data) => {
 const loginSuccess = (dispatch, user) => {
     AsyncStorage.multiSet([['user_id', JSON.stringify(user.id)], ['user', JSON.stringify(user)]])
         .then(() => dispatch({type: 'login_success', user}));
+
+    dispatch({type: 'login_success', user});
 };
 
 const loginFailed = (dispatch, error) => {
