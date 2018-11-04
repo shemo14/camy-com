@@ -4,6 +4,7 @@ import { Background, Spinner } from "../common";
 import { Input, Button, Icon, Content, Item, Label, Container, Form } from 'native-base';
 import { connect } from 'react-redux';
 import { LoginUser } from '../actions';
+import { store, persistedStore } from '../store';
 import I18n from '../../local/i18n';
 
 
@@ -35,7 +36,7 @@ class Login extends Component{
         if (!err){
             this.setState({ loader: true });
             const {email, password} = this.state;
-            this.props.LoginUser({email, password});
+            this.props.LoginUser({email, password, type: 'login'});
         }else{
             console.log(err, this.state.emailError, this.state.emailError);
         }

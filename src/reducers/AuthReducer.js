@@ -1,4 +1,4 @@
-const INITIAL_STATE = {user: null, loading: false, error: ''};
+const INITIAL_STATE = {user: null, loading: false, error: '', guest: false};
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type){
@@ -8,6 +8,8 @@ export default (state = INITIAL_STATE, action) => {
             return ({...state, loading: false, error: action.error});
         case ('login_success') :
             return ({...state, loading: false, user: action.user});
+        case ('user_logout') :
+            return ({...state, user: null});
         default :
             return state;
     }

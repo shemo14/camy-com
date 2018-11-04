@@ -1,15 +1,29 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-export const LoginUser = ({ email, password }) => {
+export const LoginUser = ({ email, password, type }) => {
+    if (type === 'login'){
+        return (dispatch) => {
+            dispatch({type: 'user_login'});
+
+
+            axios.post('https://shams.arabsdesign.com/camy/api/login', {email, password})
+                .then(response => handelLogin(dispatch, response.data))
+                .catch(error => console.warn(error.data));
+        };
+    }else{
+        return (dispatch) => {
+            dispatch({ type: 'user_logout' });
+            AsyncStorage.removeItem('auth');
+        };
+    }
+};
+
+const LogoutUser = () => {
     return (dispatch) => {
-        dispatch({type: 'user_login'});
-
-
-        axios.post('https://shams.arabsdesign.com/camy/api/login', {email, password})
-            .then(response => handelLogin(dispatch, response.data))
-            .catch(error => console.warn(error.data));
-    };
+        dispatch({ type: 'user_logout' });
+        AsyncStorage.removeItem('auth');
+    }
 };
 
 

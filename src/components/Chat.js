@@ -6,7 +6,7 @@ import axios from 'axios';
 import I18n from "../../local/i18n";
 import Loader from './Loader';
 
-class Share extends Component{
+class Chat extends Component{
 
     constructor(props){
         super(props);
@@ -18,8 +18,8 @@ class Share extends Component{
     }
 
     static navigationOptions = () => ({
-        drawerLabel: I18n.t('shareWithFriends'),
-        drawerIcon: ( <Icon style={{ fontSize: 24 }} type='Feather' name='share-2' /> )
+        drawerLabel: I18n.t('chat'),
+        drawerIcon: ( <Icon style={{ fontSize: 24 }} type='Ionicons' name='ios-chatbubbles' /> )
     });
 
     componentWillMount(){
@@ -75,4 +75,4 @@ const styles= {
     }
 };
 
-export default Share;
+export default Chat;

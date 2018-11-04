@@ -15,6 +15,8 @@ import I18n from '../../local/i18n';
 import {changeLang} from "../actions";
 import Share from "./Share";
 import Rate from "./Rate";
+import Chat from "./Chat";
+import Lang from "./Lang";
 
 const lang = '';
 
@@ -26,32 +28,15 @@ const DrawerNavigator = createDrawerNavigator({
         home: Home,
         profile: Profile,
         cart: Cart,
-        chat: {
-            screen: Share,
-            navigationOptions: {
-                drawerLabel: I18n.t('chat'),
-                drawerIcon: ( <Icon style={{ fontSize: 24 }} type='Ionicons' name='ios-chatbubbles' /> )
-            }
-        },
+        chat: Chat,
         orders: Orders,
         favorites: Favorites,
-        share: {
-            screen: Share,
-            navigationOptions: {
-                drawerLabel: I18n.t('shareWithFriends'),
-                drawerIcon: ( <Icon style={{ fontSize: 24 }} type='Feather' name='share-2' /> )
-            }
-        },
-        rate: {
-            screen: Rate,
-            navigationOptions: {
-                drawerLabel: I18n.t('rateUs'),
-                drawerIcon: ( <Icon style={{ fontSize: 24 }} type='FontAwesome' name='star'/> )
-            }
-        },
+        share: Share,
+        rate: Rate,
         maintenance: Maintenance,
         about: About,
         settings: Settings,
+        lang: Lang,
     },
     {
         initialRouteName: 'home',

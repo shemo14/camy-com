@@ -74,7 +74,7 @@ class Search extends Component{
                         <Button onPress={() => this.props.navigation.navigate('maintenance')}>
                             <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dmaint.png')} />
                         </Button>
-                        <Button onPress={() => this.props.navigation.navigate('offers')}>
+                        <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
                             <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dsales.png')} />
                         </Button>
                         <Button onPress={() => this.props.navigation.navigate('cart')}>

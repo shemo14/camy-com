@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Text, SafeAreaView, ScrollView, Image, View, AsyncStorage, TouchableOpacity } from 'react-native';
-import { Content, Header, Container, Left, Button, Icon, Body, Right, Footer, FooterTab, Picker } from 'native-base';
+import { Content, Header, Container, Left, Button, Icon, Body, Right, Footer, FooterTab, Picker, Toast } from 'native-base';
 import Slider from './ProductSlider';
 import ProductDetails from './ProductDetails';
 import { Like } from '../actions'
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Modal from 'react-native-modal';
 import I18n from "../../local/i18n";
 import axios from 'axios';
@@ -21,7 +21,8 @@ class Product extends Component {
             dislikeIcon: 'heart-o',
             likeIcon: 'heart',
             visibleModal: null,
-            cartCounter: 0
+            cartCounter: 0,
+            showToast: false,
         };
     }
 
@@ -40,21 +41,29 @@ class Product extends Component {
     }
 
     onPressLike(product_id){
-        if (this.state.liked){
-            this.refs[product_id].setNativeProps({ style: {color: '#c0c0bf'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
+        if(this.props.auth_user !== null) {
+            if (this.state.liked) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-            this.setState({ liked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o' });
+                this.setState({liked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+
+                this.setState({liked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
         }else{
-            this.refs[product_id].setNativeProps({ style: {color: '#d34b52'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
-
-            this.setState({ liked: true, dislikeIcon: 'heart', likeIcon: 'heart' });
+            Toast.show({
+                text: I18n.t('plzLogin'),
+                type: "danger",
+                duration: 5000
+            });
         }
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked) {
+        if (isLiked && this.props.auth_user !== null) {
             return (
                 <Icon ref={ref_id} style={styles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
             );
@@ -76,10 +85,30 @@ class Product extends Component {
     }
 
     setToCart(qty){
-        this.setState({ loading: true });
-        AsyncStorage.getItem('user_id')
-                    .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {user_id: user_id, product_id: this.state.productDetails.id, qty: qty})
-                                          .then(response => this.setState({ cartCounter: response.data.cartCounter, loading: false, visibleModal: 1 })))
+        if (this.props.auth_user !== null){
+            this.setState({ loading: true });
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {user_id: user_id, product_id: this.state.productDetails.id, qty: qty})
+                    .then(response => this.setState({ cartCounter: response.data.cartCounter, loading: false, visibleModal: 1 })))
+        }else{
+            Toast.show({
+                text: I18n.t('plzLogin'),
+                type: "danger",
+                duration: 5000
+            });
+        }
+    }
+
+    navigateToCart(){
+        if (this.props.auth_user !== null){
+            this.props.navigation.navigate('cart')
+        }else {
+            Toast.show({
+                text: I18n.t('plzLogin'),
+                type: "danger",
+                duration: 5000
+            });
+        }
     }
 
     render(){
@@ -104,9 +133,9 @@ class Product extends Component {
                             { this.renderLoveIcon(this.state.liked, this.state.productDetails.id ) }
                         </TouchableOpacity>
 
-                        <Button transparent onPress={() => this.props.navigation.navigate('cart')}>
+                        <Button transparent onPress={() => this.navigateToCart()}>
                             <Icon name='shopping-cart' type='Feather' style={{ color: '#000' }} />
-                            <Text style={{ backgroundColor: '#69c24f', borderRadius: 50, paddingRight: 5, paddingLeft: 5 , color: '#fff', position:'relative', right: 12, bottom:9 }}>{ this.state.cartCounter }</Text>
+                            <Text style={{ backgroundColor: '#69c24f', borderRadius: 50, paddingRight: 5, paddingLeft: 5 , color: '#fff', position:'relative', right: 12, bottom:9 }}>{ this.props.auth_user !== null ? this.state.cartCounter : 0 }</Text>
                         </Button>
                     </Right>
                 </Header>
@@ -210,11 +239,12 @@ const styles = {
     }
 };
 
-const mapTOState = state => {
+const mapTOState = ({ like, auth }) => {
     return {
-        user_id: state.like.user_id,
-        product_id: state.like.product_id,
-        isLiked: state.like.isLiked,
+        user_id: like.user_id,
+        product_id: like.product_id,
+        isLiked: like.isLiked,
+        auth_user: auth.user
     };
 };
 

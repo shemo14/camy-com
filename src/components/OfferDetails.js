@@ -32,7 +32,7 @@ class OfferDetails extends Component{
     }
 
     onPressLike(product_id){
-        if(this.state.user_id !== '' && this.state.user_id !== null){
+        if(this.props.auth_user !== null){
             if (this.state.isLiked){
                 this.refs[product_id].setNativeProps({ style: {color: '#c0c0bf'}});
                 AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
@@ -48,7 +48,6 @@ class OfferDetails extends Component{
             Toast.show({
                 text: I18n.t('plzLogin'),
                 type: "danger",
-                buttonText: I18n.t('login'),
                 duration: 5000
             });
         }
@@ -57,7 +56,7 @@ class OfferDetails extends Component{
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked) {
+        if (isLiked && this.props.auth_user !== null) {
             return (
                 <Icon ref={ref_id} style={offerStyles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
             );
@@ -198,11 +197,12 @@ const offerStyles = {
 
 };
 
-const mapTOState = state => {
+const mapTOState = ({ like, auth }) => {
   return {
-    user_id: state.like.user_id,
-    product_id: state.like.product_id,
-    isLiked: state.like.isLiked,
+    user_id: like.user_id,
+    product_id: like.product_id,
+    isLiked: like.isLiked,
+    auth_user: auth.user
   };
 };
 

@@ -1,75 +1,69 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, AsyncStorage, FlatList } from 'react-native';
 import {Content, Container, Icon, Left, Button, Body, Footer, FooterTab, Header, Toast} from 'native-base';
 import axios from 'axios';
-import I18n from "../../local/i18n";
+import I18n from '../../local/i18n';
 import Loader from './Loader';
+import HomeProduct from './HomeProduct';
 import {connect} from "react-redux";
 
-class Maintenance extends Component{
+class AllProducts extends Component{
     constructor(props){
         super(props);
         this.state={
-            mains: [],
             loading: true,
+            products: [],
         }
     }
 
     componentWillMount(){
-        axios.get('https://shams.arabsdesign.com/camy/api/maintenance/' + I18n.locale )
-            .then(response => this.setState({ mains: response.data.mains , loading: false }) )
-            .catch(error => console.log(error));
+        AsyncStorage.getItem('user_id').then(user_id => {
+            axios.get('https://shams.arabsdesign.com/camy/api/allProducts/' + I18n.locale + '/' + user_id)
+                .then(response => this.setState({ products: response.data.products, loading: false }))
+                .catch(error => console.log(error));
+        });
     }
 
-    static navigationOptions = () => ({
-        drawerLabel: I18n.t('maintenance'),
-        drawerIcon: ( <Icon style={{ fontSize: 24 }} type={'FontAwesome'} name={'wrench'}/> )
-    });
-
-    renderMains(){
-        return this.state.mains.map(main => {
-            return (
-                <Button key={main.id} block style={{ marginTop: 25, backgroundColor: '#020f31', borderRadius: 10 }} onPress={() => {
-                    if(this.props.user !== null) {
-                        this.props.navigation.navigate('maintenanceRequest', {main})
-                    } else {
-                        Toast.show({
-                            text: I18n.t('plzLogin'),
-                            type: "danger",
-                            duration: 5000
-                        });
-                    }
-                }}>
-                    <Text style={{ color: '#fff', fontSize: 18 }}>{ main.name }</Text>
-                </Button>
-            );
-        })
+    renderItem(product) {
+        return (<HomeProduct navigation={this.props.navigation} liked={product.isLiked} key={product.index} data={product.item} />);
     }
 
     render(){
         return(
             <Container>
-                <Header style={{ height: 70, backgroundColor: '#fff', paddingTop: 15, borderBottomWidth: 1, borderBottomColor: '#eee' }}>
+                <Header style={{
+                    height: 70,
+                    backgroundColor: '#fff',
+                    paddingTop: 15,
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#eee'
+                }}>
                     <Left style={{ flex: 0 }}>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <Icon name={ I18n.locale === 'ar' ? 'ios-arrow-forward' : 'ios-arrow-back' } type='Ionicons' style={{ color: '#000' }} />
                         </Button>
                     </Left>
                     <Body style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <Text style={{fontSize: 18, color: '#999', textAlign: 'center'}}>{ I18n.t('maintenance') }</Text>
+                    <Text style={{fontSize: 18, color: '#999', textAlign: 'center'}}>{ I18n.t('allProduct') }</Text>
                     </Body>
                 </Header>
-                <Content style={{ paddingRight: 20, paddingLeft: 20, }}>
+                <Content>
                     <Loader loading={this.state.loading} />
-                    { this.renderMains() }
+                    <View style={{ flex: 2, padding: 10 }}>
+                        <FlatList
+                            data={this.state.products}
+                            renderItem={product => this.renderItem(product)}
+                            numColumns={2}
+                        />
+                    </View>
                 </Content>
                 <Footer style={{backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee'}}>
                     <FooterTab style={{backgroundColor: '#fff'}}>
-                        <Button>
-                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dmaint1.png')}/>
+                        <Button onPress={() => this.props.navigation.navigate('maintenance')}>
+                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dmaint.png')}/>
                         </Button>
                         <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
-                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dsales.png')}/>
+                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dsales1.png')}/>
                         </Button>
                         <Button onPress={() => {
                             if(this.props.user !== null){
@@ -99,9 +93,8 @@ class Maintenance extends Component{
 
 const styles={
     imageStyle: {
-        flex: 1,
         width: '100%',
-        justifyContent: 'center',
+        height: 150
     }
 };
 
@@ -111,4 +104,4 @@ const mapStateToProps = ({ auth }) => {
     }
 };
 
-export default connect(mapStateToProps)(Maintenance);
+export default connect(mapStateToProps)(AllProducts);

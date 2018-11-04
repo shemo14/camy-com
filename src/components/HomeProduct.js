@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, Share, Text, ImageBackground, TouchableOpacity, AsyncStorage, Image} from 'react-native';
-import { Icon, Card, CardItem, Button } from 'native-base';
+import { Icon, Card, CardItem, Button, Toast } from 'native-base';
 import { connect }  from 'react-redux';
 import { Like } from '../actions';
 import I18n from '../../local/i18n';
@@ -15,29 +15,38 @@ class HomeProduct extends Component{
             isLiked: this.props.liked,
             dislikeIcon: 'heart-o',
             likeIcon: 'heart',
-            loading: false
+            loading: false,
+            showToast: false,
         };
         this.onPressLike = this.onPressLike.bind(this);
     }
 
     onPressLike(product_id){
-        if (this.state.isLiked){
-            this.refs[product_id].setNativeProps({ style: {color: '#c0c0bf'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
+        if(this.props.auth_user !== null) {
+            if (this.state.isLiked) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-            this.setState({ isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o' });
+                this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+
+                this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
         }else{
-            this.refs[product_id].setNativeProps({ style: {color: '#d34b52'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
-
-            this.setState({ isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart' });
+            Toast.show({
+                text: I18n.t('plzLogin'),
+                type: "danger",
+                duration: 5000
+            });
         }
 
         console.log(this.state.isLiked);
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked) {
+        if (isLiked && this.props.auth_user !== null) {
             return (
                 <Icon ref={ref_id} style={{ color: '#d34b52',alignSelf: 'flex-start' }} name={this.state.likeIcon} type={'FontAwesome'}/>
             );
@@ -61,24 +70,49 @@ class HomeProduct extends Component{
         })
     };
 
-    buyNow(){
-        this.setState({ loading: true });
-        AsyncStorage.getItem('user_id')
-            .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/buyNow/' + user_id + '/' + this.props.data.id )
-                .then(response => {
-                    this.setState({ loading: false });
-                    this.props.navigation.navigate('payment', {orderId: response.data.order_id, total: this.props.data.price})
-                }));
+    buyNow() {
+        if (this.props.auth_user !== null) {
+            this.setState({loading: true});
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/buyNow/' + user_id + '/' + this.props.data.id)
+                    .then(response => {
+                        this.setState({loading: false});
+                        this.props.navigation.navigate('payment', {
+                            orderId: response.data.order_id,
+                            total: this.props.data.price
+                        })
+                    }));
+
+            }else{
+                Toast.show({
+                    text: I18n.t('plzLogin'),
+                    type: "danger",
+                    duration: 5000
+                });
+            }
+
     }
 
     addToCart(){
-        this.setState({ loading: true });
-        AsyncStorage.getItem('user_id')
-            .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {user_id: user_id, product_id: this.props.data.id, qty: 1})
-                .then(response => {
-                    this.setState({ loading: false });
-                    this.props.navigation.navigate('cart')
-                }));
+        if (this.props.auth_user !== null) {
+            this.setState({loading: true});
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                    user_id: user_id,
+                    product_id: this.props.data.id,
+                    qty: 1
+                })
+                    .then(response => {
+                        this.setState({loading: false});
+                        this.props.navigation.navigate('cart')
+                    }));
+        }else{
+            Toast.show({
+                text: I18n.t('plzLogin'),
+                type: "danger",
+                duration: 5000
+            });
+        }
     }
 
     render(){
@@ -300,11 +334,12 @@ const products = {
     }
 };
 
-const mapTOState = state => {
+const mapTOState = ({ like, auth }) => {
     return {
-        user_id: state.like.user_id,
-        product_id: state.like.product_id,
-        isLiked: state.like.isLiked,
+        user_id: like.user_id,
+        product_id: like.product_id,
+        isLiked: like.isLiked,
+        auth_user: auth.user
     };
 };
 

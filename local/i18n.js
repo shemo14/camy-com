@@ -88,7 +88,9 @@ I18n.translations = {
         'rateUs' : 'Rate Us',
         'chat': 'Chat',
         'welcome': 'Welcome',
-        'plzLogin': 'please, login first'
+        'plzLogin': 'please, login first',
+        'allProduct': 'All Product',
+        'lang': 'العربية'
     },
     ar: {
         'login': 'تسجيل دخول',
@@ -175,7 +177,9 @@ I18n.translations = {
         'rateUs' : 'تقيم التطبيق',
         'chat': 'المحادثة',
         'welcome' : 'اهلا',
-        'plzLogin': 'الرجاء تسجيل الدخول اولا'
+        'plzLogin': 'الرجاء تسجيل الدخول اولا',
+        'allProduct': 'كل المنتجات',
+        'lang': 'English'
     }
 };
 

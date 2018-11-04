@@ -1,40 +1,9 @@
 import React, { Component } from 'react';
 import {View, Text, Image, FlatList, Dimensions, TouchableOpacity} from 'react-native';
-import { Container, Header, Content, Button, Icon, Body, Left, CheckBox, DatePicker } from 'native-base';
+import {Container, Header, Content, Button, Icon, Body, Left, Footer, FooterTab, Toast} from 'native-base';
 import axios from 'axios';
 import I18n from "../../local/i18n";
 import Loader from './Loader';
-
-const data = [
-    {
-        key: 1,
-        image: '../../assets/images/poster.jpg'
-    },
-    {
-        key: 2,
-        image: '../../assets/images/poster.jpg'
-    },
-    {
-        key: 3,
-        image: '../../assets/images/poster.jpg'
-    },
-    {
-        key: 4,
-        image: '../../assets/images/poster.jpg'
-    },
-    {
-        key: 5,
-        image: '../../assets/images/poster.jpg'
-    },
-    {
-        key: 6,
-        image: '../../assets/images/poster.jpg'
-    },
-    {
-        key: 7,
-        image: '../../assets/images/poster.jpg'
-    },
-];
 
 const width = Dimensions.get('window').width;
 
@@ -43,9 +12,9 @@ class OfferBanars extends Component{
     constructor(props){
         super(props);
         this.state={
-            socials: [],
-            aboutApp: '',
-            loading: true
+            loading: true,
+            firstImage: [],
+            images: []
         }
     }
 
@@ -55,13 +24,17 @@ class OfferBanars extends Component{
     });
 
     componentWillMount(){
-        // axios.get('https://shams.arabsdesign.com/camy/api/aboutApp').then(response => {
-        //     this.setState({ socials: response.data.socials, aboutApp: response.data.aboutApp, loading: false })
-        // })
+        axios.get('https://shams.arabsdesign.com/camy/api/getOffersBanar').then(response => {
+            this.setState({ firstImage: response.data.firstImage, images: response.data.images, loading: false })
+        })
+    }
+
+    onPressBanar(id){
+        this.props.navigation.navigate('offer', { offerId: id })
     }
 
     renderItem(image){
-        const count = data.length;
+        const count = this.state.images.length;
         let styleLastItem = {
             height: 150,
             flex: 1,
@@ -82,8 +55,8 @@ class OfferBanars extends Component{
         }
 
         return(
-            <TouchableOpacity>
-                <Image key={image.index} resizeMode={Image.resizeMode.stretch} style={styleLastItem} source={require('../../assets/images/poster.jpg')}/>
+            <TouchableOpacity onPress={() => this.onPressBanar(image.item.key)}>
+                <Image key={image.item.key} resizeMode={Image.resizeMode.stretch} style={styleLastItem} source={{ uri: image.item.image }}/>
             </TouchableOpacity>
         );
     }
@@ -93,8 +66,8 @@ class OfferBanars extends Component{
             <Container>
                 <Header style={{ height: 70, backgroundColor: '#fff', paddingTop: 15, borderBottomWidth:1, borderBottomColor: '#eee'}}>
                     <Left style={{ flex: 0 }}>
-                        <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-                            <Icon name='menu' style={{ color: '#000' }} />
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name={ I18n.locale === 'ar' ? 'ios-arrow-forward' : 'ios-arrow-back' } type='Ionicons' style={{ color: '#000' }} />
                         </Button>
                     </Left>
                     <Body style={{ alignItems: 'center', justifyContent: 'center'}}>
@@ -102,22 +75,51 @@ class OfferBanars extends Component{
                     </Body>
                 </Header>
                 <Content>
-                    {/*<Loader loading={this.state.loading} />*/}
+                    <Loader loading={this.state.loading} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ flex: 1, height: 150 }}>
-                            <TouchableOpacity style={{ width: '100%', height: 0, flex: 1 }}>
-                                <Image resizeMode={Image.resizeMode.stretch} style={{ height: 150, flex: 1, width: width }} source={require('../../assets/images/poster.jpg')}/>
+                            <TouchableOpacity style={{ width: '100%', height: 0, flex: 1 }} onPress={() => this.onPressBanar(this.state.firstImage.key)}>
+                                <Image resizeMode={Image.resizeMode.stretch} style={{ height: 150, flex: 1, width: width }} source={{ uri: this.state.firstImage.image }}/>
                             </TouchableOpacity>
                         </View>
                         <View style={{ flex: 2 }}>
                             <FlatList
-                                data={data}
+                                data={this.state.images}
                                 renderItem={image => this.renderItem(image)}
                                 numColumns={2}
                             />
                         </View>
                     </View>
                 </Content>
+                <Footer style={{backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee'}}>
+                    <FooterTab style={{backgroundColor: '#fff'}}>
+                        <Button onPress={() => this.props.navigation.navigate('maintenance')}>
+                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dmaint.png')}/>
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
+                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dsales1.png')}/>
+                        </Button>
+                        <Button onPress={() => {
+                            if(this.props.user !== null){
+                                this.props.navigation.navigate('cart')
+                            }else{
+                                Toast.show({
+                                    text: I18n.t('plzLogin'),
+                                    type: "danger",
+                                    duration: 5000
+                                });
+                            }
+                        }}>
+                            <Image style={{width: 27, height: 32}} source={require('../../assets/images/dcart.png')}/>
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('search')}>
+                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dsearch.png')}/>
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('home')}>
+                            <Image style={{width: 27, height: 27}} source={require('../../assets/images/dhome.png')}/>
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
         );
     }

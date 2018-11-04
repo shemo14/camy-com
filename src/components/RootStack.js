@@ -30,6 +30,8 @@ console.log('Root lang ',I18n.locale );
 
 import { createStackNavigator } from 'react-navigation';
 import OfferBanars from "./OfferBanars";
+import Offer from "./Offer";
+import AllProducts from "./AllProducts";
 
 
 export default createStackNavigator({
@@ -167,6 +169,18 @@ export default createStackNavigator({
     },
     offerBanars: {
         screen: OfferBanars,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    offer: {
+        screen: Offer,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    allProduct: {
+        screen: AllProducts,
         navigationOptions: {
             header: null,
         }

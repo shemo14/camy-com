@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { ScrollView, SafeAreaView, Image, Animated, BackHandler, AsyncStorage } from 'react-native';
+import { ScrollView, SafeAreaView, Image, Animated, BackHandler, AsyncStorage, View } from 'react-native';
 import Slider from './HomeSlider';
 import HomeOffers from './HomeOffers';
 import Brands from './Brands';
 import Banar from './Banar';
 import Categories from './Categories';
 import CategoriesProducts from './CategoriesProducts';
-import { Footer, FooterTab, Button, Icon, Header, Left, Body, Container, Right, Content } from 'native-base';
+import {Footer, FooterTab, Button, Icon, Header, Left, Body, Container, Right, Content, Toast} from 'native-base';
 import I18n from '../../local/i18n';
+import { connect } from "react-redux";
 import axios from 'axios';
 import Expo, {Notifications, Permissions} from "expo";
 
@@ -89,8 +90,8 @@ class Home extends Component {
             Animated.timing(
                 this.state.fadeAnim,
                 {
-                    toValue: 1,
-                    duration: 1500,
+                    toValue: 200,
+                    duration: 1300,
                 },
             ).start();
             this.setState({ availabel: 1 });
@@ -115,13 +116,15 @@ class Home extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Animated.View style={{ position: 'absolute', top: 70, backgroundColor: '#030f31', width: '100%', zIndex: 99999999, opacity: this.state.fadeAnim, padding: 5 }}>
-                    <Categories navigation={this.props.navigation} data={this.state.categories} />
-                </Animated.View>
+                <Animated.ScrollView style={{ position: 'absolute', top: 70, backgroundColor: '#030f31', width: '100%', zIndex: 99999999, height: this.state.fadeAnim }}>
+                    <View style={{ padding: 5 }}>
+                        <Categories navigation={this.props.navigation} data={this.state.categories} />
+                    </View>
+                </Animated.ScrollView>
                 <Content>
                     <SafeAreaView style={{backgroundColor: '#fff', flex: 1}}>
                         <ScrollView style={{ flex: 0.8 }}>
-                            <Slider/>
+                            <Slider navigation={this.props.navigation}/>
                             <HomeOffers navigation={this.props.navigation}/>
                             <Brands/>
                             <Banar/>
@@ -134,10 +137,20 @@ class Home extends Component {
                         <Button onPress={() => this.props.navigation.navigate('maintenance')}>
                             <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dmaint.png')} />
                         </Button>
-                        <Button onPress={() => this.props.navigation.navigate('offers')}>
+                        <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
                             <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dsales.png')} />
                         </Button>
-                        <Button onPress={() => this.props.navigation.navigate('cart')}>
+                        <Button onPress={() => {
+                            if(this.props.user !== null){
+                                this.props.navigation.navigate('cart')
+                            }else{
+                                Toast.show({
+                                    text: I18n.t('plzLogin'),
+                                    type: "danger",
+                                    duration: 5000
+                                });
+                            }
+                        }}>
                             <Image style={{ width:27, height: 32 }} source={require('../../assets/images/dcart.png')} />
                         </Button>
                         <Button onPress={() => this.props.navigation.navigate('search')}>
@@ -152,4 +165,12 @@ class Home extends Component {
         );
     }
 }
-export default Home;
+
+const mapStateToProps = ({ auth, lang }) => {
+  return {
+      user: auth.user,
+      lang: lang.locale
+  }
+};
+
+export default connect(mapStateToProps)(Home);

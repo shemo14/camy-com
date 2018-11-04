@@ -1,13 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Image, AsyncStorage } from 'react-native';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import ReduxThunk from 'redux-thunk';
-import reducers from './src/reducers';
+import { PersistGate } from 'redux-persist/integration/react';
 import RootStack from './src/components/RootStack';
 import { Root } from "native-base";
 import { I18nManager } from 'react-native';
-import { DangerZone } from 'expo';
+import { store, persistedStore } from './src/store';
 import I18n from './local/i18n';
 
 AsyncStorage.getItem('lang').then(lang => {
@@ -47,10 +45,12 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-                <Root>
-                    <RootStack lang={this.state.lang}/>
-                </Root>
+            <Provider store={store}>
+                <PersistGate persistor={persistedStore}>
+                    <Root>
+                        <RootStack lang={this.state.lang}/>
+                    </Root>
+                </PersistGate>
             </Provider>
         );
     }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Image, AsyncStorage, FlatList } from 'react-native';
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { Content, Container, Icon, Left, Button, Body, Footer, FooterTab, Header } from 'native-base';
+import {Content, Container, Icon, Left, Button, Body, Footer, FooterTab, Header, Toast} from 'native-base';
 import axios from 'axios';
 import I18n from '../../local/i18n';
 import Loader from './Loader';
 import HomeProduct from './HomeProduct';
+import {connect} from "react-redux";
 
 class Offers extends Component{
     constructor(props){
@@ -62,10 +63,20 @@ class Offers extends Component{
                         <Button onPress={() => this.props.navigation.navigate('maintenance')}>
                             <Image style={{width: 27, height: 27}} source={require('../../assets/images/dmaint.png')}/>
                         </Button>
-                        <Button onPress={() => this.props.navigation.navigate('offers')}>
+                        <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
                             <Image style={{width: 27, height: 27}} source={require('../../assets/images/dsales1.png')}/>
                         </Button>
-                        <Button onPress={() => this.props.navigation.navigate('cart')}>
+                        <Button onPress={() => {
+                            if(this.props.user !== null){
+                                this.props.navigation.navigate('cart')
+                            }else{
+                                Toast.show({
+                                    text: I18n.t('plzLogin'),
+                                    type: "danger",
+                                    duration: 5000
+                                });
+                            }
+                        }}>
                             <Image style={{width: 27, height: 32}} source={require('../../assets/images/dcart.png')}/>
                         </Button>
                         <Button onPress={() => this.props.navigation.navigate('search')}>
@@ -88,4 +99,10 @@ const styles={
   }
 };
 
-export default Offers;
+const mapStateToProps = ({ auth }) => {
+    return {
+        user: auth.user
+    }
+};
+
+export default connect(mapStateToProps)(Offers);

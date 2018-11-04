@@ -18,8 +18,8 @@ class Rate extends Component{
     }
 
     static navigationOptions = () => ({
-        drawerLabel: I18n.t('about'),
-        drawerIcon: ( <Icon style={{ fontSize: 24 }} type={'Feather'} name={'info'}/> )
+        drawerLabel: I18n.t('rateUs'),
+        drawerIcon: ( <Icon style={{ fontSize: 24 }} type='FontAwesome' name='star'/> )
     });
 
     componentWillMount(){

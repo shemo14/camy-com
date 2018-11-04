@@ -30,7 +30,6 @@ class Settings extends Component{
         else
             this.setState({ ar: false, en: true });
 
-        console.log(I18n.locale);
         this.props.changeLang(lang);
         I18n.locale = lang;
         AsyncStorage.setItem('lang', I18n.locale).then(() => {
@@ -93,9 +92,9 @@ class Settings extends Component{
     }
 }
 
-const mapStateToProps = ({ LangReducer }) => {
+const mapStateToProps = ({ lang }) => {
     return {
-        locale: LangReducer.locale
+        locale: lang.locale
     }
 };
 
