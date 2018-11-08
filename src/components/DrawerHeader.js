@@ -72,8 +72,8 @@ class DrawerHeader extends Component {
                             <Text style={styles.welcomeText}>{ I18n.t('welcome') }</Text>
                             <View style={styles.authContainer}>
                                 <Text onPress={() => this.props.navigation.navigate('profile')} style={styles.usernameText}>{ user.name }</Text>
-                                <View style={styles.logoutContainer} onPress={() => this.onPressLogout() }>
-                                    <TouchableOpacity onPress={() => this.onPressLogout() }>
+                                <View style={{ flex: 1, left: 8, flexDirection:'row', flexWrap: 'wrap' }} onPress={() => this.onPressLogout() }>
+                                    <TouchableOpacity style={styles.logoutContainer} onPress={() => this.onPressLogout() }>
                                         <Image style={styles.logoutImage} onPress={() => console.log('ops')} source={require('../../assets/images/sidelogout.png')} />
                                         <Text style={styles.logout}>{ I18n.t('logout') }</Text>
                                     </TouchableOpacity>
@@ -169,7 +169,8 @@ const styles = {
     logoutContainer:{
         flex: 1,
         flexDirection:'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        alignSelf: 'flex-end'
     },
 };
 

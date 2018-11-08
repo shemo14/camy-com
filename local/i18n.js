@@ -15,7 +15,7 @@ I18n.translations = {
         'tags': 'Tags',
         'search': 'Search',
         'maintenance': 'Maintenance',
-        'buy' : 'BUY',
+        'buy' : 'PURCHASE',
         'addInstallation' : 'add installation price',
         'selectDeliverDate' : 'Select Deliver Date',
         'payment' : 'Payment',
@@ -55,7 +55,7 @@ I18n.translations = {
         'favorites' : 'Favorites',
         'thanks' : 'THANK YOU',
         'forYouOrder' : 'for You Order',
-        'orderNum' : 'Order Number',
+        'orderNum' : 'Order Id',
         'confirmDelivery' : 'CONFIRMED DELIVERY',
         'goToHome' : 'Go To Home',
         'myOrders' : 'My Orders',
@@ -90,7 +90,9 @@ I18n.translations = {
         'welcome': 'Welcome',
         'plzLogin': 'please, login first',
         'allProduct': 'All Product',
-        'lang': 'العربية'
+        'lang': 'العربية',
+        'copyRight': 'Design And Development By AAIT',
+        'edit' : 'Edit'
     },
     ar: {
         'login': 'تسجيل دخول',
@@ -179,17 +181,22 @@ I18n.translations = {
         'welcome' : 'اهلا',
         'plzLogin': 'الرجاء تسجيل الدخول اولا',
         'allProduct': 'كل المنتجات',
-        'lang': 'English'
+        'lang': 'English',
+        'copyRight' : 'تصميم و برمجة اوامر الشبكة',
+        'edit' : 'تعديل'
     }
 };
 
 
 I18n.locale = 'en';
 
+let lang_ = '';
+
 AsyncStorage.getItem('lang').then(lang => {
     console.log('this is lang : ', lang);
     I18n.locale = lang;
+    lang_ = lang;
 });
 
-console.log('after fun', I18n.locale);
+console.log('after fun', lang_);
 export default I18n;

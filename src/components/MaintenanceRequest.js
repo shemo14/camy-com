@@ -99,6 +99,8 @@ class MaintenanceRequest extends Component{
                             type: "success",
                             duration: 5000
                         });
+
+                        this.props.navigation.navigation('home')
                     })
             });
     }

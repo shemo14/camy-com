@@ -35,7 +35,7 @@ class Payment extends Component{
                     <View style={{ padding: 30, backgroundColor: '#f8fcff', flex: 1 }}>
                         <Text style={{ fontSize: 17,fontWeight: 'bold' , color: '#606062', marginBottom: 10 }}>{ I18n.t('promoCode') }</Text>
                         <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10 }}>
-                            <Input placeholder={ I18n.locale === 'en' ? '#1234' : '#١٢٣٤'} placeholderStyle={{ textAlign: I18n.locale === 'en' ? 'right' : 'left' }} style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', height: 45, padding: 5, textAlign: I18n.locale === 'en' ? 'right' : 'left' }}/>
+                            <Input placeholder={'#1234'} placeholderStyle={{ color: '#9a9a9a' }} style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', height: 45, padding: 5, textAlign: I18n.locale === 'en' ? 'right' : 'left' }}/>
                             <Button style={{ width: 100, backgroundColor: '#337ccb', justifyContent: 'center' }}>
                                 <Text style={{ color: '#fff', textAlign: 'center', fontSize: 17 }}>{ I18n.t('apply') }</Text>
                             </Button>

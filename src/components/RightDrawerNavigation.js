@@ -31,7 +31,7 @@ const DrawerNavigator = createDrawerNavigator({
     },
     {
         initialRouteName: 'home',
-        drawerPosition: 'left',
+        drawerPosition: 'right',
         contentComponent: CustomDrawerContentComponent,
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',

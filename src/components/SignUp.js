@@ -113,7 +113,7 @@ class SignUp extends Component{
 
         return (
             <Button block style={{marginTop: 20}} onPress={() => { this.setState({ loading: true }); this.onSignUpPressed();}} primary>
-                <Text style={{color: '#fff', fontSize: 17, fontWeight: 'bold'}}>Sign Up</Text>
+                <Text style={{color: '#fff', fontSize: 17, fontWeight: 'bold'}}>Create Account</Text>
             </Button>
         );
     }

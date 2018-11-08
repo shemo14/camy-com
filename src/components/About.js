@@ -56,8 +56,8 @@ class About extends Component{
                                         </TouchableOpacity>
                                     );
                                 })}
-
                             </View>
+                            <Text style={{ textAlign: 'center', marginTop: 30 }}>{I18n.t('copyRight')}</Text>
                         </View>
                     </View>
                 </Content>

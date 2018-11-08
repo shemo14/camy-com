@@ -14,8 +14,8 @@ class Settings extends Component{
         super(props);
         this.state={
             active: false,
-            en: I18n.locale === 'en' ? true : false,
-            ar: I18n.locale === 'ar' ? true : false
+            en: this.props.locale === 'en' ? true : false,
+            ar: this.props.locale === 'ar' ? true : false
         }
     }
 

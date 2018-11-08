@@ -24,19 +24,29 @@ import OrderDetails from './OrderDetails';
 import DrawerNavigator from './DrawerNvigator';
 import I18n from 'ex-react-native-i18n';
 import CameraScreen from "./Camera";
-
-AsyncStorage.getItem('lang').then(lang => I18n.locale = lang);
-console.log('Root lang ',I18n.locale );
-
 import { createStackNavigator } from 'react-navigation';
 import OfferBanars from "./OfferBanars";
 import Offer from "./Offer";
 import AllProducts from "./AllProducts";
+import RightDrawerNavigation from './RightDrawerNavigation';
+import InitialScreen from './InitialScreen';
 
 
 export default createStackNavigator({
+    initialScreen: {
+        screen: InitialScreen,
+        navigationOptions: {
+            header: null,
+        }
+    },
     drawerNavigator: {
         screen: DrawerNavigator,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    drawerNavigatorRight: {
+        screen: RightDrawerNavigation,
         navigationOptions: {
             header: null,
         }
@@ -186,5 +196,6 @@ export default createStackNavigator({
         }
     }
 },{
+    initialRouteName: 'initialScreen',
     gesturesEnabled: false,
 });

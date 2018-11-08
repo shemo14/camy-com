@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {View, Text, Image, ScrollView, AsyncStorage} from 'react-native';
-import { Container, Header, Content, Button, Icon, ListItem, Radio, Right, Body, Left, Footer, Input } from 'native-base';
-import CartListItem from './CartListItem';
-import { Row, Grid } from "react-native-easy-grid";
+import {View, Text, Image, ScrollView, AsyncStorage, TouchableOpacity} from 'react-native';
+import { Container, Header, Content, Button, Icon, Body, Left } from 'native-base';
 import axios from 'axios';
 import I18n from "../../local/i18n";
 
@@ -29,23 +27,26 @@ class ConfirmPayment extends Component{
     componentWillMount(){
         AsyncStorage.getItem('user_id').then(user_id =>
             axios.get('https://shams.arabsdesign.com/camy/api/OrderProducts/' + I18n.locale + '/' + user_id + '/' + this.state.orderId)
-                 .then(response => this.setState({
-                     orderProducts: response.data.data.products,
-                     country: response.data.data.address.country,
-                     country_id: response.data.data.address.country_id,
-                     city: response.data.data.address.city,
-                     address: response.data.data.address.address,
-                     location_id: response.data.data.address.location_id,
-                     more_address: response.data.data.address.more_address,
-                     orderPrice: response.data.data.price.order_price,
-                     chappingPrice: response.data.data.price.chapping,
-                     total: response.data.data.price.total,
-                     date: response.data.data.date,
-                 }))
+                 .then(response => {
+                     this.setState({
+                         orderProducts: response.data.data.products,
+                         country: response.data.data.address.country,
+                         country_id: response.data.data.address.country_id,
+                         city: response.data.data.address.city,
+                         address: response.data.data.address.address,
+                         location_id: response.data.data.address.location_id,
+                         more_address: response.data.data.address.more_address,
+                         orderPrice: response.data.data.price.order_price,
+                         chappingPrice: response.data.data.price.chapping,
+                         total: response.data.data.price.total,
+                         date: response.data.data.date,
+                     })
+                 })
         )
     }
 
     confirmOrderBill(){
+        console.log(this.state.date);
         this.setState({ loading: true });
         AsyncStorage.getItem('user_id').then(user_id =>
             axios.post('https://shams.arabsdesign.com/camy/api/makeOrderBill', {
@@ -55,7 +56,7 @@ class ConfirmPayment extends Component{
                 location_id: this.state.location_id,
             }).then(response => {
                     this.setState({ loading: false });
-                    this.props.navigation.navigate('thanks', { orderId: this.state.orderId, date: this.state.data })
+                    this.props.navigation.navigate('thanks', { orderId: this.state.orderId, date: this.state.date })
               })
         )
     }
@@ -82,7 +83,12 @@ class ConfirmPayment extends Component{
                             <Text style={styles.addressStyle}>{ this.state.more_address }</Text>
                         </View>
                         <View style={{padding: 15}}>
-                            <Text style={styles.orderStyleTitle}>{ I18n.t('yourOrder') }</Text>
+                            <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}>
+                                <Text style={styles.orderStyleTitle}>{ I18n.t('yourOrder') }</Text>
+                                <TouchableOpacity style={{ alignItems: 'flex-end', flex: 1 }} onPress={() => this.props.navigation.navigate('cart')}>
+                                    <Text style={{ color: '#7eb6d6', fontSize: 17 }}>{I18n.t('edit')}</Text>
+                                </TouchableOpacity>
+                            </View>
 
                             {this.state.orderProducts.map(product => {
                                 return (
@@ -164,7 +170,9 @@ const styles = {
         fontSize: 17,
         fontWeight: 'bold',
         color: '#606062',
-        marginBottom: 10
+        marginBottom: 10,
+        flex: 1,
+        alignSelf: 'flex-start'
     },
     orderContainer: {
         flexDirection: 'row',

@@ -74,11 +74,11 @@ class HomeSlider extends Component{
                     carouselRef={this._slider1Ref}
                     tappableDots={!!this._slider1Ref}
                 />
-                <Button onPress={() => this.props.navigation.navigate('allProduct')} style={{ backgroundColor: '#020f31', position: 'absolute', height: 35, top: 10, right: 10, padding: 5 }}>
-                    <Text style={{ color: '#fff' }}>{ I18n.t('seeAll') }</Text>
+                <Button onPress={() => this.props.navigation.navigate('offers')} style={{ backgroundColor: '#020f31', position: 'absolute', height: 35, top: 10, right: 10, padding: 5 }}>
+                    <Text style={{ color: '#fff' }}>{ I18n.t('topOffers') }</Text>
                 </Button>
-                <Button onPress={() => this.props.navigation.navigate('offers')} style={{ backgroundColor: '#ebf2fd', position: 'absolute', bottom: 10, height: 35, right: 10, padding: 5 }}>
-                    <Text>{ I18n.t('topOffers') }</Text>
+                <Button onPress={() => this.props.navigation.navigate('allProduct')} style={{ backgroundColor: '#ebf2fd', position: 'absolute', bottom: 10, height: 35, right: 10, padding: 5 }}>
+                    <Text>{ I18n.t('seeAll') }</Text>
                 </Button>
             </View>
         );

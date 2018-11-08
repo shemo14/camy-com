@@ -8,16 +8,16 @@ import { I18nManager } from 'react-native';
 import { store, persistedStore } from './src/store';
 import I18n from './local/i18n';
 
-AsyncStorage.getItem('lang').then(lang => {
-    if (lang === 'ar') {
-        I18nManager.forceRTL(true);
-    } else if (lang === 'en') {
-        I18nManager.forceRTL(false);
-    }else{
-        I18n.locale = 'en';
-        AsyncStorage.setItem('lang', 'en');
-    }
-});
+// AsyncStorage.getItem('lang').then(lang => {
+//     if (lang === 'ar') {
+//         I18nManager.forceRTL(true);
+//     } else if (lang === 'en') {
+//         I18nManager.forceRTL(false);
+//     }else{
+//         I18n.locale = 'en';
+//         AsyncStorage.setItem('lang', 'en');
+//     }
+// });
 
 
 
@@ -39,6 +39,7 @@ export default class App extends React.Component {
                 I18nManager.forceRTL(false);
             }
             // return this.setState({ lang: value });
+
         }).done();
     }
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Share, Text, ScrollView, AsyncStorage } from 'react-native';
+import {View, Share, Text, ScrollView, AsyncStorage, I18nManager} from 'react-native';
 import OfferDetails from './OfferDetails';
 import I18n from '../../local/i18n';
 import axios from 'axios';
 import Loader from './Loader';
+import {connect} from "react-redux";
 
 
 
@@ -24,6 +25,16 @@ class HomeOffers extends Component{
                 .then(response => this.setState({ offers: response.data.products, loading: false }))
                 .catch(error => console.warn(error));
         });
+
+        if (this.props.lang === 'ar') {
+            I18nManager.forceRTL(true);
+        } else if (this.props.lang === 'en') {
+            I18nManager.forceRTL(false);
+        }
+
+        console.log('redux lang', this.props.lang);
+
+        I18n.locale = this.props.lang;
     }
 
     renderOffers(){
@@ -87,8 +98,7 @@ const offerStyles = {
     offerText: {
         fontSize: 20,
         color: '#828391',
-        marginBottom: 5,
-        textAlign: I18n.locale === 'en' ? 'left' : 'right'
+        marginBottom: 5
     },
     productNameStyle: {
         color : '#a5a5a5'
@@ -118,4 +128,13 @@ const offerStyles = {
 
 };
 
-export default HomeOffers;
+
+const mapStateToProps = ({ auth, lang }) => {
+    return {
+        user: auth.user,
+        lang: lang.locale
+    }
+};
+
+
+export default connect(mapStateToProps)(HomeOffers);

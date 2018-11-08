@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, SafeAreaView, Image, Animated, BackHandler, AsyncStorage, View } from 'react-native';
+import { ScrollView, SafeAreaView, Image, Animated, BackHandler, AsyncStorage, View, I18nManager } from 'react-native';
 import Slider from './HomeSlider';
 import HomeOffers from './HomeOffers';
 import Brands from './Brands';
@@ -39,6 +39,12 @@ class Home extends Component {
         BackHandler.addEventListener('hardwareBackPress', function() {
             BackHandler.exitApp();
         });
+
+        I18n.locale = this.props.lang;
+
+        if (this.props.lang === 'en' && this.props.dir === 'rtl' || this.props.lang === 'ar' && this.props.dir === 'lrt'){
+            Expo.Util.reload();
+        }
 
         console.log(Expo.Constants.deviceId);
     }
@@ -169,7 +175,8 @@ class Home extends Component {
 const mapStateToProps = ({ auth, lang }) => {
   return {
       user: auth.user,
-      lang: lang.locale
+      lang: lang.locale,
+      dir: lang.dir
   }
 };
 

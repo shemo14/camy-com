@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, Text, Image, ListView, AsyncStorage} from 'react-native';
-import { Container, Header, Content, Button, Icon, List, Body, Left, CheckBox, DatePicker } from 'native-base';
+import {Container, Header, Content, Button, Icon, List, Body, Left, CheckBox, DatePicker, Toast, Footer, FooterTab} from 'native-base';
 import CartListItem from './CartListItem';
 import { Row, Grid } from "react-native-easy-grid";
 import axios from 'axios';
@@ -111,12 +111,12 @@ class Cart extends Component{
                 renderRow={data => <CartListItem setProductCounter={this.setProductCounter.bind(this)}
                                                  data={data}/>}
 
-                renderLeftHiddenRow={(data) =>
+                renderRightHiddenRow={(data) =>
                     <Button full success onPress={_ => this.props.navigation.navigate('product', { productDetails: data ,isLiked: isLiked, liked: this.state.isLiked })}>
                         <Icon active type={'Feather'} name={'info'}/>
                     </Button>}
 
-                renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+                renderLeftHiddenRow={(data, secId, rowId, rowMap) =>
                     <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data.id)}>
                         <Icon active name="trash"/>
                     </Button>}
@@ -138,12 +138,10 @@ class Cart extends Component{
     render(){
         const isLiked = data => {
             this.setState({ isLiked: data });
-            console.log(data, this.state.isLiked);
         };
-        console.log(this.state.listViewData);
         return(
             <Container>
-                <Header style={{ height: 70, backgroundColor: '#fff', paddingTop: 15, borderBottomWidth:1, borderBottomColor: '#eee'}}>
+                <Header style={{ height: 70, top: 4, backgroundColor: '#fff', paddingTop: 15, borderBottomWidth:1, borderBottomColor: '#eee'}}>
                     <Left style={{ flex: 0 }}>
                         <Button transparent onPress={() => this.props.navigation.openDrawer()}>
                             <Icon name='menu' style={{ color: '#000' }} />
@@ -161,7 +159,7 @@ class Cart extends Component{
                         </Row>
                         <Row size={25}>
                             <View style={styles.buyContainer}>
-                                <View style={{ flexDirection: 'row', marginTop: 50, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
                                     <Body style={{ flex: 0 }}>
                                         <Text onPress={() => this.setInstallation()} style={{ color: '#000', fontWeight: '600', marginLeft: 10, marginRight: 10 }}>{ I18n.t('addInstallation') } ({ this.state.installation } { I18n.t('sar') })</Text>
                                     </Body>
@@ -181,13 +179,42 @@ class Cart extends Component{
                                     onDateChange={this.setDate}
                                     mode={'dateTime'}
                                 />
-                                <Button disabled={ this.state.listViewData.length > 0 ? false : true } onPress={() => this.setOrder()} style={{ alignSelf: 'center', marginTop: 10, width: 130, flex: 1, justifyContent: 'center', alignItems: 'center' }} light rounded>
+                                <Button disabled={ this.state.listViewData.length > 0 ? false : true } onPress={() => this.setOrder()} style={{ alignSelf: 'center', marginTop: 10, width: 200, flex: 1, justifyContent: 'center', alignItems: 'center' }} light rounded>
                                     <Text style={{ textAlign: 'center' }}> { I18n.t('buy') } : { this.state.total } { I18n.t('sar') }</Text>
                                 </Button>
                             </View>
                         </Row>
                     </Grid>
                 </Content>
+                <Footer style={{ backgroundColor: '#fff', borderBottomWidth:1, borderBottomColor: '#eee' }}>
+                    <FooterTab style={{ backgroundColor: '#fff' }}>
+                        <Button onPress={() => this.props.navigation.navigate('maintenance')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dmaint.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dsales.png')} />
+                        </Button>
+                        <Button onPress={() => {
+                            if(this.props.user !== null){
+                                this.props.navigation.navigate('cart')
+                            }else{
+                                Toast.show({
+                                    text: I18n.t('plzLogin'),
+                                    type: "danger",
+                                    duration: 5000
+                                });
+                            }
+                        }}>
+                            <Image style={{ width:27, height: 32 }} source={require('../../assets/images/dcart1.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('search')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dsearch.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('home')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dhome.png')} />
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
         );
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
