@@ -63,7 +63,7 @@ class Product extends Component {
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked && this.props.auth_user !== null) {
+        if (isLiked) {
             return (
                 <Icon ref={ref_id} style={styles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
             );
@@ -84,31 +84,23 @@ class Product extends Component {
         this.props.navigation.navigate('relatedProduct', { categoryId: this.state.productDetails.category_id });
     }
 
-    setToCart(qty){
-        if (this.props.auth_user !== null){
-            this.setState({ loading: true });
-            AsyncStorage.getItem('user_id')
-                .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {user_id: user_id, product_id: this.state.productDetails.id, qty: qty})
-                    .then(response => this.setState({ cartCounter: response.data.cartCounter, loading: false, visibleModal: 1 })))
-        }else{
-            Toast.show({
-                text: I18n.t('plzLogin'),
-                type: "danger",
-                duration: 5000
-            });
-        }
+    setToCart(qty) {
+        this.setState({loading: true});
+        AsyncStorage.getItem('user_id')
+            .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                user_id: user_id,
+                product_id: this.state.productDetails.id,
+                qty: qty
+            })
+                .then(response => this.setState({
+                    cartCounter: response.data.cartCounter,
+                    loading: false,
+                    visibleModal: 1
+                })))
     }
 
-    navigateToCart(){
-        if (this.props.auth_user !== null){
-            this.props.navigation.navigate('cart')
-        }else {
-            Toast.show({
-                text: I18n.t('plzLogin'),
-                type: "danger",
-                duration: 5000
-            });
-        }
+    navigateToCart() {
+        this.props.navigation.navigate('cart')
     }
 
     render(){
@@ -135,7 +127,7 @@ class Product extends Component {
 
                         <Button transparent onPress={() => this.navigateToCart()}>
                             <Icon name='shopping-cart' type='Feather' style={{ color: '#000' }} />
-                            <Text style={{ backgroundColor: '#69c24f', borderRadius: 50, paddingRight: 5, paddingLeft: 5 , color: '#fff', position:'relative', right: 12, bottom:9 }}>{ this.props.auth_user !== null ? this.state.cartCounter : 0 }</Text>
+                            <Text style={{ backgroundColor: '#69c24f', borderRadius: 50, paddingRight: 5, paddingLeft: 5 , color: '#fff', position:'relative', right: 12, bottom:9 }}>{ this.state.cartCounter }</Text>
                         </Button>
                     </Right>
                 </Header>

@@ -6,6 +6,8 @@ import { Row, Grid } from "react-native-easy-grid";
 import axios from 'axios';
 import I18n from '../../local/i18n';
 import Loader from './Loader';
+import {Like} from "../actions";
+import {connect} from "react-redux";
 
 class Cart extends Component{
 
@@ -69,12 +71,26 @@ class Cart extends Component{
     }
 
     setOrder(){
-        this.setState({ loading: true });
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.post('https://shams.arabsdesign.com/camy/api/makeOrder', { user_id: user_id, total: this.state.total, date: this.state.chosenDate } )
-                .then(response => { this.props.navigation.navigate('payment', { orderId: response.data.order_id, total: response.data.total }); this.setState({ loading: false }) })
-                .catch(error => console.log(error));
-        });
+        if (this.props.auth_user !== null) {
+            this.setState({loading: true});
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.post('https://shams.arabsdesign.com/camy/api/makeOrder', {
+                    user_id: user_id,
+                    total: this.state.total,
+                    date: this.state.chosenDate
+                })
+                    .then(response => {
+                        this.props.navigation.navigate('payment', {
+                            orderId: response.data.order_id,
+                            total: response.data.total
+                        });
+                        this.setState({loading: false})
+                    })
+                    .catch(error => console.log(error));
+            });
+        }else{
+            this.props.navigation.navigate('login');
+        }
     }
 
     renderList(ListData, isLiked){
@@ -230,4 +246,13 @@ const styles= {
   }
 };
 
-export default Cart;
+const mapTOState = ({ like, auth }) => {
+    return {
+        user_id: like.user_id,
+        product_id: like.product_id,
+        isLiked: like.isLiked,
+        auth_user: auth.user
+    };
+};
+
+export default connect(mapTOState, { Like })( Cart );

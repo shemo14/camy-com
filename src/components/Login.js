@@ -43,7 +43,10 @@ class Login extends Component{
     }
 
     skipNavigations(){
-        this.props.navigation.navigate('drawerNavigator');
+        if (this.props.lang === 'en'){
+            this.props.navigation.navigate('drawerNavigator')
+        }else
+            this.props.navigation.navigate('drawerNavigatorRight')
     }
 
     validate = () => {
@@ -86,7 +89,10 @@ class Login extends Component{
 
     componentWillReceiveProps(newProps){
         if (newProps.user){
-            this.props.navigation.navigate('drawerNavigator');
+            if (this.props.lang === 'en'){
+                this.props.navigation.navigate('drawerNavigator')
+            }else
+                this.props.navigation.navigate('drawerNavigatorRight')
         }
     }
 
@@ -156,11 +162,12 @@ const styles = {
 };
 
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ lang, auth }) => {
     return {
-        error: state.auth.error,
-        loading: state.auth.loading,
-        user: state.auth.user,
+        error: auth.error,
+        loading: auth.loading,
+        user: auth.user,
+        lang: lang.locale,
     }
 };
 

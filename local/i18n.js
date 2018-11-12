@@ -95,7 +95,7 @@ I18n.translations = {
         'edit' : 'Edit'
     },
     ar: {
-        'login': 'تسجيل دخول',
+        'login': 'دخول',
         'currentOffers': 'العروض الحالية',
         'getNotifications': 'استقبال اشعارات',
         'topBrands': 'الماركات',

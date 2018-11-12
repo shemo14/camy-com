@@ -31,32 +31,24 @@ class OfferDetails extends Component{
         })
     }
 
-    onPressLike(product_id){
-        if(this.props.auth_user !== null){
-            if (this.state.isLiked){
-                this.refs[product_id].setNativeProps({ style: {color: '#c0c0bf'}});
-                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
+    onPressLike(product_id) {
+        if (this.state.isLiked) {
+            this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-                this.setState({ isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o' });
-            }else{
-                this.refs[product_id].setNativeProps({ style: {color: '#d34b52'}});
-                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({ product_id, user_id }));
+            this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+        } else {
+            this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-                this.setState({ isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart' });
-            }
-        }else{
-            Toast.show({
-                text: I18n.t('plzLogin'),
-                type: "danger",
-                duration: 5000
-            });
+            this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
         }
 
         console.log(this.state.isLiked);
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked && this.props.auth_user !== null) {
+        if (isLiked) {
             return (
                 <Icon ref={ref_id} style={offerStyles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
             );

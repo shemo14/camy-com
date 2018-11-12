@@ -21,32 +21,25 @@ class HomeProduct extends Component{
         this.onPressLike = this.onPressLike.bind(this);
     }
 
-    onPressLike(product_id){
-        if(this.props.auth_user !== null) {
-            if (this.state.isLiked) {
-                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
-                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+    onPressLike(product_id) {
+        if (this.state.isLiked) {
+            this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-                this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
-            } else {
-                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
-                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+            this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+        } else {
+            this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-                this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
-            }
-        }else{
-            Toast.show({
-                text: I18n.t('plzLogin'),
-                type: "danger",
-                duration: 5000
-            });
+            this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
         }
+
 
         console.log(this.state.isLiked);
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked && this.props.auth_user !== null) {
+        if (isLiked) {
             return (
                 <Icon ref={ref_id} style={{ color: '#d34b52',alignSelf: 'flex-start' }} name={this.state.likeIcon} type={'FontAwesome'}/>
             );
@@ -93,26 +86,19 @@ class HomeProduct extends Component{
 
     }
 
-    addToCart(){
-        if (this.props.auth_user !== null) {
-            this.setState({loading: true});
-            AsyncStorage.getItem('user_id')
-                .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
-                    user_id: user_id,
-                    product_id: this.props.data.id,
-                    qty: 1
-                })
-                    .then(response => {
-                        this.setState({loading: false});
-                        this.props.navigation.navigate('cart')
-                    }));
-        }else{
-            Toast.show({
-                text: I18n.t('plzLogin'),
-                type: "danger",
-                duration: 5000
-            });
-        }
+    addToCart() {
+        this.setState({loading: true});
+        AsyncStorage.getItem('user_id')
+            .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                user_id: user_id,
+                product_id: this.props.data.id,
+                qty: 1
+            })
+                .then(response => {
+                    this.setState({loading: false});
+                    this.props.navigation.navigate('cart')
+                }));
+
     }
 
     render(){
