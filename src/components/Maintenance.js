@@ -33,11 +33,7 @@ class Maintenance extends Component{
                     if(this.props.user !== null) {
                         this.props.navigation.navigate('maintenanceRequest', {main})
                     } else {
-                        Toast.show({
-                            text: I18n.t('plzLogin'),
-                            type: "danger",
-                            duration: 5000
-                        });
+                        this.props.navigation.navigate('login');
                     }
                 }}>
                     <Text style={{ color: '#fff', fontSize: 18 }}>{ main.name }</Text>

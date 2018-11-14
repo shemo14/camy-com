@@ -21,6 +21,17 @@ class Thanks extends Component{
         }
     }
 
+    renderDelivedDate(){
+        if (this.state.date !== ''){
+            return(
+                <View>
+                    <Text style={{ color: '#6cc66a', fontSize: 20, textAlign: 'center' }}>{ I18n.t('confirmDelivery') }</Text>
+                    <Text style={{ textAlign: 'center', color: '#787878', fontSize: 20, marginBottom: 10 }}>{ this.state.date }</Text>
+                </View>
+            );
+        }
+    }
+
     render(){
         return(
             <Container>
@@ -34,10 +45,7 @@ class Thanks extends Component{
                         <View>
                             { this.renderImage() }
                         </View>
-                        <View>
-                            <Text style={{ color: '#6cc66a', fontSize: 20, textAlign: 'center' }}>{ I18n.t('confirmDelivery') }</Text>
-                            <Text style={{ textAlign: 'center', color: '#787878', fontSize: 20, marginBottom: 10 }}>{ this.state.date }</Text>
-                        </View>
+                        { this.renderDelivedDate() }
                     </View>
                 </Content>
                 <View style={{ justifyContent: 'flex-end'}}>

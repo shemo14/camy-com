@@ -5,12 +5,14 @@ import { connect }  from 'react-redux';
 import { Like } from '../actions'
 import I18n from '../../local/i18n';
 import Expo from "expo";
+import axios from "axios/index";
 
 class OfferDetails extends Component{
     constructor(props){
         super(props);
         this.state = {
             isLiked: this.props.liked,
+            inLocalStorage: this.props.data.inLocalStorage,
             dislikeIcon: 'heart-o',
             likeIcon: 'heart',
             showToast: false,
@@ -32,26 +34,50 @@ class OfferDetails extends Component{
     }
 
     onPressLike(product_id) {
-        if (this.state.isLiked) {
-            this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+        if (this.props.auth_user === null){
+            if (this.state.inLocalStorage) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                this.setState({inLocalStorage: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                this.setState({inLocalStorage: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
 
-            this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
-        } else {
-            this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+            axios.post('https://shams.arabsdesign.com/camy/api/likeLocalStorage', {
+                product_id: this.props.data.id,
+                type: 'fav',
+                token: Expo.Constants.deviceId,
+            });
+        }else{
+            if (this.state.isLiked) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-            this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+                this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+
+                this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
         }
 
         console.log(this.state.isLiked);
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked) {
-            return (
-                <Icon ref={ref_id} style={offerStyles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
-            );
+        if (this.props.auth_user === null){
+            if (this.props.data.inLocalStorage) {
+                return (
+                    <Icon color={'#d34b52'} ref={ref_id} style={offerStyles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
+                );
+            }
+        }else{
+            if (isLiked) {
+                return (
+                    <Icon ref={ref_id} style={offerStyles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
+                );
+            }
         }
 
         return (

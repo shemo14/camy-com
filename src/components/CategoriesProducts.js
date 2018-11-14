@@ -14,7 +14,7 @@ class CategoriesProducts extends Component{
 
     componentWillMount(){
         AsyncStorage.getItem('user_id').then(user_id => {
-            axios.get('https://shams.arabsdesign.com/camy/api/categoryProducts/' + I18n.locale + '/' + user_id)
+            axios.get('https://shams.arabsdesign.com/camy/api/categoryProducts/' + I18n.locale + '/' + user_id + '/' + Expo.Constants.deviceId)
                 .then(response => this.setState({ categories: response.data.data }))
                 .catch(error => console.log(error));
         });

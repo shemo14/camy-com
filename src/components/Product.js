@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Modal from 'react-native-modal';
 import I18n from "../../local/i18n";
 import axios from 'axios';
+import Expo from "expo";
 
 
 class Product extends Component {
@@ -35,38 +36,61 @@ class Product extends Component {
     );
 
     componentWillMount(){
-        AsyncStorage.getItem('user_id')
-                    .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/cartCounter/' + user_id)
-                                          .then(response => this.setState({ cartCounter: response.data.cartCounter })))
+        if (this.props.auth_user === null){
+            axios.get('https://shams.arabsdesign.com/camy/api/localStorageCounter/' + Expo.Constants.deviceId + '/' + 'cart')
+                .then(response => this.setState({ cartCounter: response.data.cartCounter }));
+        }else {
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/cartCounter/' + user_id)
+                    .then(response => this.setState({ cartCounter: response.data.cartCounter })))
+        }
     }
 
-    onPressLike(product_id){
-        if(this.props.auth_user !== null) {
-            if (this.state.liked) {
+    onPressLike(product_id) {
+        if (this.props.auth_user === null){
+            if (this.state.inLocalStorage) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                this.setState({inLocalStorage: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                this.setState({inLocalStorage: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
+
+            axios.post('https://shams.arabsdesign.com/camy/api/likeLocalStorage', {
+                product_id: this.state.productDetails.id,
+                type: 'fav',
+                token: Expo.Constants.deviceId,
+            });
+        }else{
+            if (this.state.isLiked) {
                 this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
                 AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-                this.setState({liked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+                this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
             } else {
                 this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
                 AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-                this.setState({liked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+                this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
             }
-        }else{
-            Toast.show({
-                text: I18n.t('plzLogin'),
-                type: "danger",
-                duration: 5000
-            });
         }
+
+        console.log(this.state.isLiked);
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked) {
-            return (
-                <Icon ref={ref_id} style={styles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
-            );
+        if (this.props.auth_user === null){
+            if (this.state.productDetails.inLocalStorage) {
+                return (
+                    <Icon color={'#d34b52'} ref={ref_id} style={styles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
+                );
+            }
+        }else{
+            if (isLiked) {
+                return (
+                    <Icon ref={ref_id} style={styles.loveIconLiked} name={this.state.likeIcon} type={'FontAwesome'}/>
+                );
+            }
         }
 
         return (
@@ -85,18 +109,32 @@ class Product extends Component {
     }
 
     setToCart(qty) {
-        this.setState({loading: true});
-        AsyncStorage.getItem('user_id')
-            .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
-                user_id: user_id,
+        if (this.props.auth_user === null){
+            axios.post('https://shams.arabsdesign.com/camy/api/setInLocalStorage', {
                 product_id: this.state.productDetails.id,
-                qty: qty
+                qty: qty,
+                type: 'cart',
+                token: Expo.Constants.deviceId,
             })
                 .then(response => this.setState({
                     cartCounter: response.data.cartCounter,
                     loading: false,
                     visibleModal: 1
-                })))
+                }));
+        }else{
+            this.setState({loading: true});
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                    user_id: user_id,
+                    product_id: this.state.productDetails.id,
+                    qty: qty
+                })
+                    .then(response => this.setState({
+                        cartCounter: response.data.cartCounter,
+                        loading: false,
+                        visibleModal: 1
+                    })))
+        }
     }
 
     navigateToCart() {
@@ -165,7 +203,7 @@ class Product extends Component {
                             <Picker
                                 note
                                 mode="dropdown"
-                                style={{ flex: 3, color: '#fff', backgroundColor: '#259239', height: 60 }}
+                                style={{ flex: 3, color: '#fff', backgroundColor: '#259239', height: 60, marginRight: 22 }}
                                 selectedValue={this.state.selected}
                                 onValueChange={(value) => this.setState({ selected: value })}
                                 itemStyle={{ flex: 1, width: 100 }}

@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import Modal from 'react-native-modal';
 import axios from "axios/index";
 import I18n from "../../local/i18n";
+import Expo from "expo";
+import {Like} from "../actions";
 
 
 class RelatedProduct extends Component {
@@ -19,9 +21,14 @@ class RelatedProduct extends Component {
     }
 
     componentWillMount(){
-        AsyncStorage.getItem('user_id')
-            .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/cartCounter/' + user_id)
-                .then(response => this.setState({ cartCounter: response.data.cartCounter })))
+        if (this.props.auth_user === null){
+            axios.get('https://shams.arabsdesign.com/camy/api/localStorageCounter/' + Expo.Constants.deviceId + '/' + 'cart')
+                .then(response => this.setState({ cartCounter: response.data.cartCounter }));
+        }else {
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.get('https://shams.arabsdesign.com/camy/api/cartCounter/' + user_id)
+                    .then(response => this.setState({ cartCounter: response.data.cartCounter })))
+        }
     }
 
     goBack(){
@@ -123,4 +130,13 @@ const styles = {
     }
 };
 
-export default RelatedProduct;
+const mapTOState = ({ like, auth }) => {
+    return {
+        user_id: like.user_id,
+        product_id: like.product_id,
+        isLiked: like.isLiked,
+        auth_user: auth.user
+    };
+};
+
+export default connect(mapTOState, { Like })( RelatedProduct );

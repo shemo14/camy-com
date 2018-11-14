@@ -6,6 +6,7 @@ import { Like } from '../actions';
 import I18n from '../../local/i18n';
 import axios from "axios/index";
 import Loader from './Loader';
+import Expo from "expo";
 
 
 class HomeProduct extends Component{
@@ -17,38 +18,63 @@ class HomeProduct extends Component{
             likeIcon: 'heart',
             loading: false,
             showToast: false,
+            inLocalStorage: this.props.data.inLocalStorage,
         };
         this.onPressLike = this.onPressLike.bind(this);
     }
 
     onPressLike(product_id) {
-        if (this.state.isLiked) {
-            this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+        if (this.props.auth_user === null){
+            if (this.state.inLocalStorage) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                this.setState({inLocalStorage: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                this.setState({inLocalStorage: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
 
-            this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
-        } else {
-            this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
-            AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+            axios.post('https://shams.arabsdesign.com/camy/api/likeLocalStorage', {
+                product_id: this.props.data.id,
+                type: 'fav',
+                token: Expo.Constants.deviceId,
+            });
+        }else{
+            if (this.state.isLiked) {
+                this.refs[product_id].setNativeProps({style: {color: '#c0c0bf'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
 
-            this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+                this.setState({isLiked: false, likeIcon: 'heart-o', dislikeIcon: 'heart-o'});
+            } else {
+                this.refs[product_id].setNativeProps({style: {color: '#d34b52'}});
+                AsyncStorage.getItem('user_id').then(user_id => this.props.Like({product_id, user_id}));
+
+                this.setState({isLiked: true, dislikeIcon: 'heart', likeIcon: 'heart'});
+            }
         }
-
 
         console.log(this.state.isLiked);
     }
 
     renderLoveIcon(isLiked, ref_id) {
-        if (isLiked) {
-            return (
-                <Icon ref={ref_id} style={{ color: '#d34b52',alignSelf: 'flex-start' }} name={this.state.likeIcon} type={'FontAwesome'}/>
-            );
+        if (this.props.auth_user === null){
+            if (this.props.data.inLocalStorage) {
+                return (
+                    <Icon ref={ref_id} style={{ color: '#d34b52',alignSelf: 'flex-start' }} name={this.state.likeIcon} type={'FontAwesome'}/>
+                );
+            }
+        }else{
+            if (isLiked) {
+                return (
+                    <Icon ref={ref_id} style={{ color: '#d34b52',alignSelf: 'flex-start' }} name={this.state.likeIcon} type={'FontAwesome'}/>
+                );
+            }
         }
 
         return (
             <Icon ref={ref_id} style={offerStyles.loveIcon} name={ this.state.dislikeIcon } type={'FontAwesome'}/>
         );
     }
+
 
     onShare (data){
         Share.share({
@@ -87,18 +113,30 @@ class HomeProduct extends Component{
     }
 
     addToCart() {
-        this.setState({loading: true});
-        AsyncStorage.getItem('user_id')
-            .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
-                user_id: user_id,
+        if (this.props.auth_user === null){
+            axios.post('https://shams.arabsdesign.com/camy/api/setInLocalStorage', {
                 product_id: this.props.data.id,
+                type: 'cart',
+                token: Expo.Constants.deviceId,
                 qty: 1
             })
                 .then(response => {
                     this.setState({loading: false});
                     this.props.navigation.navigate('cart')
-                }));
-
+                })
+        }else{
+            this.setState({loading: true});
+            AsyncStorage.getItem('user_id')
+                .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                    user_id: user_id,
+                    product_id: this.props.data.id,
+                    qty: 1
+                })
+                    .then(response => {
+                        this.setState({loading: false});
+                        this.props.navigation.navigate('cart')
+                    }));
+        }
     }
 
     render(){
@@ -130,7 +168,7 @@ class HomeProduct extends Component{
                 <CardItem style={products.textContainer}>
                     <View>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })}>
-                            <Text style={products.productNameStyle}>{this.props.data.name}</Text>
+                            <Text style={products.productNameStyle}>{this.props.data.name.substring(0,18)}...</Text>
                         </TouchableOpacity>
                         <Text style={products.productPrice}>{ this.props.data.discount } { I18n.t('sar') }</Text>
                         <Text style={products.productDiscount}>{ this.props.data.price } { I18n.t('sar') }</Text>
@@ -224,7 +262,7 @@ const products = {
     productImage: {
         flex: 1,
         width: 150,
-        height: 150,
+        height: 120,
         justifyContent: 'center',
         borderColor: '#999',
         borderBottomWidth: 1,
@@ -287,14 +325,14 @@ const products = {
         flex: 3,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 40,
+        height: 33,
         marginRight: 2,
     },
     cartButton: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 40,
+        height: 33,
         width: 20,
         padding: 0
     },

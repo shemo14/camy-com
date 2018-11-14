@@ -30,6 +30,7 @@ import Offer from "./Offer";
 import AllProducts from "./AllProducts";
 import RightDrawerNavigation from './RightDrawerNavigation';
 import InitialScreen from './InitialScreen';
+import CartListItem from "./CartListItem";
 
 
 export default createStackNavigator({
@@ -191,6 +192,12 @@ export default createStackNavigator({
     },
     allProduct: {
         screen: AllProducts,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    cartList: {
+        screen: CartListItem,
         navigationOptions: {
             header: null,
         }

@@ -7,6 +7,8 @@ import ProductDetails from './ProductDetails';
 import Modal from 'react-native-modal';
 import Expo from "expo";
 import I18n from '../../local/i18n';
+import {Like} from "../actions";
+import {connect} from "react-redux";
 
 
 
@@ -35,21 +37,39 @@ class ProductModel extends Component {
 
     addToCard(){
         this.setState({ visibleModal: null });
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.post('https://shams.arabsdesign.com/camy/api/addToCard', { user_id: user_id, product_id: this.props.product.id })
-                 .then(response => this.setState({ msg: response.data.msg }))
-                 .catch(error => console.log(error));
-        }).catch(() => {
-            this.setState({ cartProducts: this.state.cartProducts.concat(this.props.product.id) });
-            AsyncStorage.setItem('cart_products', JSON.stringify(this.state.cartProducts))
-                        .then(() => this.setState({ msg: 'product added to your cart successfully' }));
-        });
-
-        Toast.show({
-            text: I18n.t('addProductToCard'),
-            type: "success",
-            duration: 3000
-        });
+        if (this.props.auth_user === null){
+            axios.post('https://shams.arabsdesign.com/camy/api/setInLocalStorage', {
+                product_id: this.props.product.id,
+                type: 'cart',
+                token: Expo.Constants.deviceId,
+                qty: 1
+            })
+                .then(response => {
+                    Toast.show({
+                        text: I18n.t('addProductToCard'),
+                        type: "success",
+                        duration: 3000
+                    });
+                })
+        }else {
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.post('https://shams.arabsdesign.com/camy/api/addToCard', {
+                    user_id: user_id,
+                    product_id: this.props.product.id
+                })
+                    .then(response => this.setState({msg: response.data.msg}))
+                    .catch(error => console.log(error));
+            }).catch(() => {
+                this.setState({cartProducts: this.state.cartProducts.concat(this.props.product.id)});
+                AsyncStorage.setItem('cart_products', JSON.stringify(this.state.cartProducts))
+                    .then(() => this.setState({msg: 'product added to your cart successfully'}));
+            });
+            Toast.show({
+                text: I18n.t('addProductToCard'),
+                type: "success",
+                duration: 3000
+            });
+        }
     }
 
 
@@ -60,7 +80,7 @@ class ProductModel extends Component {
         return(
             <View style={styles.container}>
                 <TouchableOpacity style={styles.imageContainer} onPress={() => this.setState({ visibleModal: 1 })}>
-                    <ImageBackground style={styles.image} resizeMode={Image.resizeMode.center} source={{ uri: this.props.product.image }} />
+                    <Image style={styles.image} resizeMode={Image.resizeMode.center} source={{ uri: this.props.product.image }} />
                 </TouchableOpacity>
                 <View style={styles.plusContainer}>
                     <TouchableOpacity onPress={() => this.addToCard()} style={styles.touchableOpacityStyle}>
@@ -92,15 +112,15 @@ class ProductModel extends Component {
 
 const styles = {
     image: {
-        flex: 1,
-        width: null,
-        height: null,
-        justifyContent: 'center',
-        borderRadius: 15
+        width: 100,
+        height: 130,
+        borderRadius: 15,
+        marginLeft: 10,
     },
     container: {
         margin: 5,
-        // maxWidth: 150,
+        width: 130,
+        height: 160
     },
     imageContainer: {
         // width: 150,
@@ -161,4 +181,14 @@ const styles = {
     }
 };
 
-export default ProductModel;
+
+const mapTOState = ({ like, auth }) => {
+    return {
+        user_id: like.user_id,
+        product_id: like.product_id,
+        isLiked: like.isLiked,
+        auth_user: auth.user
+    };
+};
+
+export default connect(mapTOState, { Like })( ProductModel );

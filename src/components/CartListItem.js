@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Text, Image, TouchableOpacity } from 'react-native';
+import {Text, Image, TouchableOpacity, AsyncStorage} from 'react-native';
 import { ListItem, Input, Icon } from 'native-base';
 import { Col, Grid } from "react-native-easy-grid";
 import I18n from "../../local/i18n";
+import axios from "axios/index";
+import Loader from './Loader';
 
 class CartListItem extends Component{
     constructor(props){
         super(props);
         this.state={
-            count: this.props.data.count
+            count: this.props.data.count,
+            loading: false,
         };
 
         this.returnCartCounter = this.returnCartCounter.bind(this);
@@ -18,9 +21,25 @@ class CartListItem extends Component{
         this.props.setProductCounter(this.state.count);
     }
 
+    increaseProduct(){
+        this.props.setProductCounter(this.props.data.id, 'inc');
+        this.setState({
+            count: this.state.count + 1,
+        });
+    }
+
+    decreaseProduct(){
+        if (this.state.count > 1){
+            this.props.setProductCounter(this.props.data.id, 'dec');
+            this.setState({ count: this.state.count-1 })
+        }
+    }
+
     render(){
         return(
+
             <ListItem style={styles.itemListStyle}>
+                <Loader loading={this.state.loading} />
                 <Grid>
                     <Col style={styles.imageContainer}>
                         <Image resizeMode={Image.resizeMode.center} style={styles.imageStyle} source={{ uri: this.props.data.image }}/>
@@ -30,11 +49,11 @@ class CartListItem extends Component{
                         <Text style={styles.priceStyle}>{ this.props.data.price } { I18n.t('sar') }</Text>
                     </Col>
                     <Col style={styles.qntyContainer}>
-                        <TouchableOpacity onPress={() => this.setState({ count: this.state.count+1 })}>
+                        <TouchableOpacity onPress={() => this.increaseProduct()}>
                             <Icon name={'plus'} type={'Entypo'}/>
                         </TouchableOpacity>
                         <Input disabled style={styles.inputStyle} value={JSON.stringify(this.state.count)} onChangeText={(count) => this.setState({ count }) }/>
-                        <TouchableOpacity onPress={() => { this.state.count >= 1 ? this.setState({ count: this.state.count-1 }) : this.setState({ count: this.state.count }) }}>
+                        <TouchableOpacity onPress={() => this.decreaseProduct()}>
                             <Icon name={'minus'} type={'Entypo'}/>
                         </TouchableOpacity>
                     </Col>

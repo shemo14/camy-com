@@ -6,8 +6,7 @@ export const LoginUser = ({ email, password, type }) => {
         return (dispatch) => {
             dispatch({type: 'user_login'});
 
-
-            axios.post('https://shams.arabsdesign.com/camy/api/login', {email, password})
+            axios.post('https://shams.arabsdesign.com/camy/api/login', {email, password, token: Expo.Constants.deviceId})
                 .then(response => handelLogin(dispatch, response.data))
                 .catch(error => console.warn(error.data));
         };

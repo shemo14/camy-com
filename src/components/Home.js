@@ -46,7 +46,6 @@ class Home extends Component {
             Expo.Util.reload();
         }
 
-        console.log(Expo.Constants.deviceId);
     }
 
     componentDidMount(){

@@ -19,7 +19,7 @@ class Offers extends Component{
 
     componentWillMount(){
         AsyncStorage.getItem('user_id').then(user_id => {
-            axios.get('https://shams.arabsdesign.com/camy/api/OfferProducts/' + I18n.locale + '/' + user_id)
+            axios.get('https://shams.arabsdesign.com/camy/api/OfferProducts/' + I18n.locale + '/' + user_id + '/' + Expo.Constants.deviceId)
                 .then(response => this.setState({ products: response.data.products, loading: false }))
                 .catch(error => console.log(error));
         });

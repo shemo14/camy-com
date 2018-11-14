@@ -8,6 +8,7 @@ import I18n from '../../local/i18n';
 import Loader from './Loader';
 import {Like} from "../actions";
 import {connect} from "react-redux";
+import Expo from "expo";
 
 class Cart extends Component{
 
@@ -34,17 +35,72 @@ class Cart extends Component{
         drawerIcon: ( <Icon style={{ fontSize: 24 }} type={'FontAwesome'} name={'shopping-cart'}/> )
     });
 
-    setProductCounter (productCounter){
-        this.setState({ productCounter: productCounter });
+    setProductCounter (product_id, type){
+        this.renderCartList(product_id, type);
     }
 
     setDate(newDate) {
         this.setState({ chosenDate: newDate });
     }
 
+    renderCartList(product_id, type) {
+        this.setState({loading: true});
+        if (type === 'inc'){
+            if (this.props.auth_user === null){
+                axios.post('https://shams.arabsdesign.com/camy/api/setInLocalStorage', {
+                    product_id: product_id,
+                    type: 'cart',
+                    token: Expo.Constants.deviceId,
+                    qty: 1
+                })
+                    .then(response => {
+                        this.setState({
+                            loading: false,
+                            total: response.data.total,
+                            installation: response.data.installation
+                        });
+                    })
+            }else {
+                AsyncStorage.getItem('user_id')
+                    .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                        user_id: user_id,
+                        product_id: product_id,
+                        qty: 1
+                    })
+                        .then(response => {
+                            this.setState({
+                                loading: false,
+                                total: response.data.total,
+                                installation: response.data.installation
+                            });
+                        }))
+            }
+        }else{
+            if (this.props.auth_user === null) {
+                axios.post('https://shams.arabsdesign.com/camy/api/deleteProductFromLocalStorage', {
+                    token: Expo.Constants.deviceId,
+                    product_id: product_id,
+                    type: 'cart'
+                })
+                    .then(response => {
+                        this.setState({ total: response.data.total, installation: response.data.installation, loading: false });
+                    })
+                    .catch(error => console.log(error));
+            } else {
+                AsyncStorage.getItem('user_id').then((user_id) => {
+                    axios.post('https://shams.arabsdesign.com/camy/api/deleteOneProductFromCard', { user_id: user_id, product_id: product_id } )
+                        .then(response => {
+                            this.setState({ total: response.data.total, installation: response.data.installation, loading: false });
+                        })
+                        .catch(error => console.log(error));
+                });
+            }
+        }
+    }
+
     componentWillMount(){
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.get('https://shams.arabsdesign.com/camy/api/userCart/' + I18n.locale + '/' + user_id )
+        if (this.props.auth_user === null){
+            axios.get('https://shams.arabsdesign.com/camy/api/getLocalStorage/' + I18n.locale + '/' + Expo.Constants.deviceId + '/' + 'cart' )
                 .then(response => {
                     this.setState({
                         listViewData: response.data.products,
@@ -54,7 +110,20 @@ class Cart extends Component{
                     });
                 })
                 .catch(error => console.log(error));
-        });
+        }else{
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.get('https://shams.arabsdesign.com/camy/api/userCart/' + I18n.locale + '/' + user_id )
+                    .then(response => {
+                        this.setState({
+                            listViewData: response.data.products,
+                            total: response.data.total,
+                            loading: false,
+                            installation: response.data.installation
+                        });
+                    })
+                    .catch(error => console.log(error));
+            });
+        }
     }
 
     deleteRow(secId, rowId, rowMap, productId) {
@@ -63,11 +132,33 @@ class Cart extends Component{
         newData.splice(rowId, 1);
         this.setState({ listViewData: newData });
 
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.post('https://shams.arabsdesign.com/camy/api/deleteFromCard', { user_id: user_id, product_id: productId } )
-                .then(response => console.log(response.data.msg))
+        if (this.props.auth_user === null) {
+            axios.post('https://shams.arabsdesign.com/camy/api/deleteFromLocalStorage', {
+                token: Expo.Constants.deviceId,
+                product_id: productId,
+                type: 'cart'
+            })
+                .then(response => {
+                    this.setState({
+                        loading: false,
+                        total: response.data.total,
+                        installation: response.data.installation
+                    });
+                })
                 .catch(error => console.log(error));
-        });
+        } else {
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.post('https://shams.arabsdesign.com/camy/api/deleteFromCard', { user_id: user_id, product_id: productId } )
+                    .then(response => {
+                        this.setState({
+                            loading: false,
+                            total: response.data.total,
+                            installation: response.data.installation
+                        });
+                    })
+                    .catch(error => console.log(error));
+            });
+        }
     }
 
     setOrder(){
@@ -101,8 +192,7 @@ class Cart extends Component{
                     leftOpenValue={75}
                     rightOpenValue={-75}
                     dataSource={this.ds.cloneWithRows(ListData)}
-                    renderRow={data => <CartListItem setProductCounter={this.setProductCounter.bind(this)}
-                                                     data={data}/>}
+                    renderRow={data => <CartListItem cartList={this.renderCartList} navigation={this.props.navigation} setProductCounter={this.setProductCounter} data={data}/>}
 
                     renderRightHiddenRow={(data) =>
                         <Button full success onPress={_ => this.props.navigation.navigate('product', { productDetails: data ,isLiked: isLiked, liked: this.state.isLiked })}>

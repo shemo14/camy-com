@@ -38,7 +38,7 @@ class Products extends Component{
              .catch(error => console.log(error));
 
         AsyncStorage.getItem('user_id').then(user_id => {
-            axios.get('https://shams.arabsdesign.com/camy/api/getCategoryProducts/' + this.state.category.id + '/' + I18n.locale + '/' + user_id )
+            axios.get('https://shams.arabsdesign.com/camy/api/getCategoryProducts/' + this.state.category.id + '/' + I18n.locale + '/' + user_id + '/' + Expo.Constants.deviceId)
                 .then(response => this.setState({ products: response.data.products }))
                 .catch(error => console.log(error));
         });
@@ -65,7 +65,8 @@ class Products extends Component{
                     subcategory_id: subcategory_id,
                     brand_id: brand_id,
                     tag_id: tag_id,
-                    user_id: user_id
+                    user_id: user_id,
+                    token: Expo.Constants.deviceId
                 })
                     .then(response => {
                         this.setState({products: response.data.products, loading: false});

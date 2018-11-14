@@ -21,7 +21,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "camy.com",
+      "bundleIdentifier": "com.aait.camy",
       "supportsTablet": true
     },
     "android": {

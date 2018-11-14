@@ -36,6 +36,7 @@ class DrawerHeader extends Component {
 
     onPressLogout(){
         this.props.LoginUser({email: 'ops', password: '123', type: 'logout'});
+        AsyncStorage.removeItem('auth');
         this.props.navigation.navigate('login');
     }
 
@@ -73,7 +74,7 @@ class DrawerHeader extends Component {
         }else{
             return(
                 <View style={styles.authContainer}>
-                    <Text onPress={() => this.props.navigation.navigate('profile')} style={styles.usernameText}>{ user.name }</Text>
+                    <Text onPress={() => this.props.navigation.navigate('profile')} style={styles.usernameText}>{ this.props.user.name }</Text>
                     <View style={{ flex: 1, left: 8, flexDirection:'row', flexWrap: 'wrap' }} onPress={() => this.onPressLogout() }>
                         <TouchableOpacity style={styles.logoutContainer} onPress={() => this.onPressLogout() }>
                             <Image style={styles.logoutImage} onPress={() => console.log('ops')} source={require('../../assets/images/sidelogout.png')} />

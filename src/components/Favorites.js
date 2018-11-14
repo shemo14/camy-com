@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Text, ListView, AsyncStorage} from 'react-native';
-import { Container, Header, Content, Button, Icon, List, Body, Left } from 'native-base';
+import { Text, ListView, AsyncStorage, Image} from 'react-native';
+import { Container, Header, Content, Button, Icon, List, Body, Left, FooterTab, Footer } from 'native-base';
 import FavList from './FavList';
-import { Row, Grid } from "react-native-easy-grid";
 import Loader from './Loader';
 import axios from 'axios';
 import I18n from '../../local/i18n';
+import {Like} from "../actions";
+import {connect} from "react-redux";
+import Expo from "expo";
 
 class Favorites extends Component{
 
@@ -32,11 +34,17 @@ class Favorites extends Component{
     });
 
     componentWillMount(){
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.get('https://shams.arabsdesign.com/camy/api/getFavs/' + user_id + '/' + I18n.locale )
-                 .then(response => this.setState({ listViewData: response.data.products, loading: false }))
-                 .catch(error => console.log(error));
-        });
+        if(this.props.auth_user === null){
+            axios.get('https://shams.arabsdesign.com/camy/api/getLocalFavs/' + Expo.Constants.deviceId + '/' + I18n.locale )
+                .then(response => this.setState({ listViewData: response.data.products, loading: false }))
+                .catch(error => console.log(error));
+        }else{
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.get('https://shams.arabsdesign.com/camy/api/getFavs/' + user_id + '/' + I18n.locale )
+                    .then(response => this.setState({ listViewData: response.data.products, loading: false }))
+                    .catch(error => console.log(error));
+            });
+        }
     }
 
     deleteRow(secId, rowId, rowMap, productId) {
@@ -45,23 +53,50 @@ class Favorites extends Component{
         newData.splice(rowId, 1);
         this.setState({ listViewData: newData });
 
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.get('https://shams.arabsdesign.com/camy/api/deleteFav/' + user_id + '/' +  productId )
+        if (this.props.auth_user === null) {
+            axios.post('https://shams.arabsdesign.com/camy/api/deleteFromLocalStorage', {
+                token: Expo.Constants.deviceId,
+                product_id: productId,
+                type: 'fav'
+            })
                 .then(response => console.log(response.data.msg))
                 .catch(error => console.log(error));
-        });
+        } else {
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.get('https://shams.arabsdesign.com/camy/api/deleteFav/' + user_id + '/' + productId)
+                    .then(response => console.log(response.data.msg))
+                    .catch(error => console.log(error));
+            });
+        }
     }
 
     addToCard(productId){
         this.setState({ loading: true });
-        AsyncStorage.getItem('user_id').then((user_id) => {
-            axios.post('https://shams.arabsdesign.com/camy/api/setToCart', { user_id: user_id, product_id: productId, qty: 1 } )
-                 .then(response => {
-                     this.setState({ loading: false });
-                     this.props.navigation.navigate('cart')
-                 })
-                 .catch(error => console.log(error));
-        });
+        if (this.props.auth_user === null){
+            axios.post('https://shams.arabsdesign.com/camy/api/setInLocalStorage', {
+                product_id: productId,
+                type: 'cart',
+                token: Expo.Constants.deviceId,
+                qty: 1
+            })
+                .then(() => {
+                    this.setState({loading: false});
+                    this.props.navigation.navigate('cart')
+                })
+        }else {
+            AsyncStorage.getItem('user_id').then((user_id) => {
+                axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
+                    user_id: user_id,
+                    product_id: productId,
+                    qty: 1
+                })
+                    .then(response => {
+                        this.setState({loading: false});
+                        this.props.navigation.navigate('cart')
+                    })
+                    .catch(error => console.log(error));
+            });
+        }
     }
 
     render(){
@@ -93,8 +128,26 @@ class Favorites extends Component{
                                 <Icon active name="trash"/>
                             </Button>}
                     />
-
                 </Content>
+                <Footer style={{ backgroundColor: '#fff', borderBottomWidth:1, borderBottomColor: '#eee' }}>
+                    <FooterTab style={{ backgroundColor: '#fff' }}>
+                        <Button onPress={() => this.props.navigation.navigate('maintenance')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dmaint.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dsales.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('cart') }>
+                            <Image style={{ width:27, height: 32 }} source={require('../../assets/images/dcart.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('search')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dsearch.png')} />
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('home')}>
+                            <Image style={{ width:27, height: 27 }} source={require('../../assets/images/dhome.png')} />
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
         );
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -110,4 +163,13 @@ const styles= {
     }
 };
 
-export default Favorites;
+const mapTOState = ({ like, auth }) => {
+    return {
+        user_id: like.user_id,
+        product_id: like.product_id,
+        isLiked: like.isLiked,
+        auth_user: auth.user
+    };
+};
+
+export default connect(mapTOState, { Like })( Favorites );
