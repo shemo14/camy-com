@@ -14,11 +14,7 @@ class CartListItem extends Component{
             loading: false,
         };
 
-        this.returnCartCounter = this.returnCartCounter.bind(this);
-    }
-
-    returnCartCounter(){
-        this.props.setProductCounter(this.state.count);
+        // this.returnCartCounter = this.returnCartCounter.bind(this);
     }
 
     increaseProduct(){

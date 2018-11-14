@@ -35,9 +35,6 @@ class Cart extends Component{
         drawerIcon: ( <Icon style={{ fontSize: 24 }} type={'FontAwesome'} name={'shopping-cart'}/> )
     });
 
-    setProductCounter (product_id, type){
-        this.renderCartList(product_id, type);
-    }
 
     setDate(newDate) {
         this.setState({ chosenDate: newDate });
@@ -192,7 +189,7 @@ class Cart extends Component{
                     leftOpenValue={75}
                     rightOpenValue={-75}
                     dataSource={this.ds.cloneWithRows(ListData)}
-                    renderRow={data => <CartListItem cartList={this.renderCartList} navigation={this.props.navigation} setProductCounter={this.setProductCounter} data={data}/>}
+                    renderRow={data => <CartListItem setProductCounter={(product_id, type) => this.renderCartList(product_id, type)} data={data}/>}
 
                     renderRightHiddenRow={(data) =>
                         <Button full success onPress={_ => this.props.navigation.navigate('product', { productDetails: data ,isLiked: isLiked, liked: this.state.isLiked })}>
@@ -214,8 +211,7 @@ class Cart extends Component{
                 leftOpenValue={75}
                 rightOpenValue={-75}
                 dataSource={this.ds.cloneWithRows(ListData)}
-                renderRow={data => <CartListItem setProductCounter={this.setProductCounter.bind(this)}
-                                                 data={data}/>}
+                renderRow={data => <CartListItem setProductCounter={(product_id, type) => this.renderCartList(product_id, type)} data={data}/>}
 
                 renderRightHiddenRow={(data) =>
                     <Button full success onPress={_ => this.props.navigation.navigate('product', { productDetails: data ,isLiked: isLiked, liked: this.state.isLiked })}>
