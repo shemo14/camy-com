@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {Text, SafeAreaView, ScrollView, Image, View, AsyncStorage, TouchableOpacity, ImageBackground } from 'react-native';
+import {
+    Text, SafeAreaView, ScrollView, Image, View, AsyncStorage, TouchableOpacity, ImageBackground,
+    I18nManager
+} from 'react-native';
 import { Icon, Toast } from 'native-base';
 import axios from "axios";
 import Slider from './ProductSlider';
@@ -160,11 +163,13 @@ const styles = {
       marginBottom: 13,
     },
     productNameStyle: {
-        color: '#afafaf'
+        color: '#afafaf',
+        textAlign: 'left',
     },
     priceStyle: {
         color: '#737585',
-        fontWeight: '600'
+        fontWeight: '600',
+        textAlign: 'left',
     },
     modalContent: {
         backgroundColor: 'white',

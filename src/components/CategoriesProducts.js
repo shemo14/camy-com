@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, AsyncStorage } from 'react-native';
+import {View, Text, ScrollView, AsyncStorage, I18nManager} from 'react-native';
 import HomeCategoryDetails from './HomeCategoryDetails';
 import axios from 'axios';
 import I18n from '../../local/i18n';
@@ -87,6 +87,7 @@ const offerStyles = {
         fontSize: 20,
         color: '#828391',
         marginBottom: 5,
+        textAlign: 'left'
     },
     productNameStyle: {
         color : '#a5a5a5'

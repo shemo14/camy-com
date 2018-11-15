@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import {View, Text, ScrollView, Image, I18nManager} from 'react-native';
 import { Card, CardItem} from 'native-base';
 import axios from 'axios';
 import I18n from '../../local/i18n';
@@ -49,6 +49,7 @@ const brands = {
         fontSize: 20,
         color: '#828391',
         marginBottom: 5,
+        textAlign: 'left'
     },
     brandContainer: {
         padding : 5,

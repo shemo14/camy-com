@@ -18,19 +18,18 @@ class SubCategory extends Component {
         return this.props.data.products.map(product => <ProductModal key={product.id} product={product} />)
     }
 
-    componentWillMount() {
-        if (I18nManager.isRTL) {
-            setTimeout(() => this.scrollView.scrollTo({x: 0, y: 0, animated: true}));
-        }
-    }
+    // componentWillMount() {
+    //     if (I18nManager.isRTL) {
+    //         setTimeout(() => this.scrollView.scrollTo({x: 0, y: 0, animated: true}));
+    //     }
+    // }
 
 
     render(){
         return(
             <View>
                 <Text style={styles.subcategoryText}>{ this.props.data.subcategory_name }</Text>
-                <ScrollView style={styles.container} horizontal={true} showsHorizontalScrollIndicator={false} ref={ref => this.scrollView = ref}
-                            ref={ref => this.scrollView = ref}>
+                <ScrollView style={styles.container} horizontal={true} showsHorizontalScrollIndicator={false} ref={ref => this.scrollView = ref} >
                     { this.renderProducts() }
                 </ScrollView>
             </View>
@@ -41,7 +40,8 @@ class SubCategory extends Component {
 const styles = {
     subcategoryText: {
         color: '#898999',
-        fontSize: 18
+        fontSize: 18,
+        textAlign: 'left',
     },
     container: {
         borderBottomWidth: 1,

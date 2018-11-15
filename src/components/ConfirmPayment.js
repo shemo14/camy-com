@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, Image, ScrollView, AsyncStorage, TouchableOpacity} from 'react-native';
+import {View, Text, Image, ScrollView, AsyncStorage, TouchableOpacity, I18nManager} from 'react-native';
 import { Container, Header, Content, Button, Icon, Body, Left } from 'native-base';
 import axios from 'axios';
 import I18n from "../../local/i18n";
@@ -148,13 +148,15 @@ const styles = {
         fontSize: 17,
         fontWeight: 'bold',
         color: '#606062',
-        marginBottom: 7
+        marginBottom: 7,
+        textAlign: 'left',
     },
     paymentSummary: {
         fontSize: 17,
         fontWeight: 'bold',
         color: '#606062',
-        margin: 10
+        margin: 10,
+        textAlign: 'left',
     },
     shippingContainer: {
         padding: 15,
@@ -164,7 +166,8 @@ const styles = {
     },
     addressStyle: {
         color: '#c5c5c4',
-        fontSize: 15
+        fontSize: 15,
+        textAlign: 'left',
     },
     orderStyleTitle: {
         fontSize: 17,
@@ -172,7 +175,8 @@ const styles = {
         color: '#606062',
         marginBottom: 10,
         flex: 1,
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        textAlign: 'left',
     },
     orderContainer: {
         flexDirection: 'row',
@@ -212,7 +216,8 @@ const styles = {
         flexDirection: 'row',
         padding: 10,
         borderWidth: 1,
-        borderColor: '#ddd'
+        borderColor: '#ddd',
+        textAlign: 'left',
     },
     price: {
         color: '#337ccb',
@@ -225,7 +230,8 @@ const styles = {
         color: '#5b5b5b',
         flex: 1,
         alignItems: 'flex-start',
-        fontSize: 16
+        fontSize: 16,
+        textAlign: 'left',
     }
 
 };

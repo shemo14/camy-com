@@ -13,6 +13,10 @@ import Share from "./Share";
 import Rate from "./Rate";
 import Chat from "./Chat";
 import Lang from "./Lang";
+import Expo from 'expo';
+
+
+
 
 const CustomDrawerContentComponent = (props) => (<DrawerHeader { ...props }/>);
 const DrawerNavigator = createDrawerNavigator({

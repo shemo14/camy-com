@@ -98,18 +98,21 @@ const offerStyles = {
     offerText: {
         fontSize: 20,
         color: '#828391',
-        marginBottom: 5
+        marginBottom: 5,
+        textAlign: 'left'
     },
     productNameStyle: {
-        color : '#a5a5a5'
+        color : '#a5a5a5',
+        textAlign: 'left'
     },
     productPrice: {
         color : '#40415c',
         fontWeight: 'bold',
-
+        textAlign: 'left'
     },
     productDiscount: {
-        color : '#ce8285'
+        color : '#ce8285',
+        textAlign: 'left'
     },
     textContainer: {
         paddingLeft: 10,

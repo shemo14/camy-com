@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import {View, Text, I18nManager} from 'react-native';
 import { Accordion } from 'native-base';
 import axios from 'axios';
 import Loader from './Loader';
@@ -46,6 +46,18 @@ class ProductDetails extends Component{
         return dataArray;
     }
 
+    _renderContent(content) {
+        return (
+            <View style={{ padding: 5 }}>
+                <Text
+                    style={{ textAlign: 'left', lineHeight: 25  }}
+                >
+                    {content.content }
+                </Text>
+            </View>
+        );
+    }
+
     render(){
         return(
             <View style={styles.productDetails}>
@@ -56,7 +68,7 @@ class ProductDetails extends Component{
                     <Text style={styles.productPrice}>{ this.state.price } { I18n.t('sar') }</Text>
                 </View>
 
-                <Accordion dataArray={this.productDetails()} expanded={0}/>
+                <Accordion dataArray={this.productDetails()} renderContent={this._renderContent} expanded={0}/>
             </View>
         );
     }
@@ -70,16 +82,19 @@ const styles = {
         marginBottom: 20
     },
     productName: {
-        fontSize: 20
+        fontSize: 20,
+        textAlign: 'left',
     },
     productPrice: {
         fontSize: 20,
         color: '#ecb6bd',
         textDecorationLine: 'line-through',
-        textDecorationStyle: 'solid'
+        textDecorationStyle: 'solid',
+        textAlign: 'left',
     },
     productDiscount: {
-        fontSize: 30
+        fontSize: 30,
+        textAlign: 'left',
     }
 
 };

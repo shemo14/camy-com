@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Share, Text, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import {View, Share, Text, Image, TouchableOpacity, AsyncStorage, I18nManager} from 'react-native';
 import { Icon, Toast } from 'native-base';
 import { connect }  from 'react-redux';
 import { Like } from '../actions'
@@ -182,19 +182,23 @@ const offerStyles = {
         fontSize: 20,
         color: '#828391',
         marginBottom: 5,
+        textAlign: 'left'
     },
     productNameStyle: {
-        color : '#a5a5a5'
+        color : '#a5a5a5',
+        textAlign: 'left'
     },
     productPrice: {
         color : '#40415c',
         fontWeight: 'bold',
+        textAlign: 'left'
 
     },
     productDiscount: {
         color : '#ce8285',
         textDecorationLine: 'line-through',
-        textDecorationStyle: 'solid'
+        textDecorationStyle: 'solid',
+        textAlign: 'left'
     },
     textContainer: {
         paddingLeft: 10,

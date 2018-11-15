@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, Image, ScrollView, AsyncStorage, TouchableOpacity} from 'react-native';
+import {View, Text, Image, ScrollView, AsyncStorage, TouchableOpacity, I18nManager} from 'react-native';
 import { Container, Header, Content, Button, Icon, ListItem, Radio, FooterTab, Body, Left, Footer, Input } from 'native-base';
 import axios from 'axios';
 import I18n from "../../local/i18n";
@@ -62,7 +62,7 @@ class Search extends Component{
                             return (
                                 <ListItem key={product.id}>
                                     <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('product', { productDetails: product ,isLiked: isLiked, liked: false })}>
-                                        <Text style={{ color: '#5b5b5b', fontSize: 18 }}>{ product.name }</Text>
+                                        <Text style={{ color: '#5b5b5b', fontSize: 18, textAlign: 'left', }}>{ product.name }</Text>
                                     </TouchableOpacity>
                                 </ListItem>
                             )
