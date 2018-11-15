@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="6a9974d4-6d0f-4b63-96ed-55aac51d537f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/components/AllProducts.js" afterPath="$PROJECT_DIR$/src/components/AllProducts.js" />
       <change beforePath="$PROJECT_DIR$/src/components/Cart.js" afterPath="$PROJECT_DIR$/src/components/Cart.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/CartListItem.js" afterPath="$PROJECT_DIR$/src/components/CartListItem.js" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomeProduct.js" afterPath="$PROJECT_DIR$/src/components/HomeProduct.js" />
+      <change beforePath="$PROJECT_DIR$/src/components/Maintenance.js" afterPath="$PROJECT_DIR$/src/components/Maintenance.js" />
+      <change beforePath="$PROJECT_DIR$/src/components/Offer.js" afterPath="$PROJECT_DIR$/src/components/Offer.js" />
+      <change beforePath="$PROJECT_DIR$/src/components/OfferBanars.js" afterPath="$PROJECT_DIR$/src/components/OfferBanars.js" />
+      <change beforePath="$PROJECT_DIR$/src/components/Offers.js" afterPath="$PROJECT_DIR$/src/components/Offers.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,18 +20,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SubCategory.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/SubCategory.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Product.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Product.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -37,22 +30,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HomeProduct.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HomeProduct.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/HomeProduct.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6760">
-              <caret line="260" column="17" lean-forward="false" selection-start-line="260" selection-start-column="17" selection-end-line="260" selection-end-column="17" />
+            <state relative-caret-position="203">
+              <caret line="165" column="43" lean-forward="true" selection-start-line="165" selection-start-column="43" selection-end-line="165" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cart.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Cart.js">
+      <file leaf-file-name="Offers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Offers.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="208">
-              <caret line="213" column="129" lean-forward="false" selection-start-line="213" selection-start-column="129" selection-end-line="213" selection-end-column="129" />
+              <caret line="75" column="95" lean-forward="false" selection-start-line="75" selection-start-column="95" selection-end-line="75" selection-end-column="95" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Cart.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Cart.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="223" column="30" lean-forward="true" selection-start-line="223" selection-start-column="30" selection-end-line="223" selection-end-column="30" />
+              <folding>
+                <marker date="1542271087000" expanded="true" signature="13912:13950" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,7 +65,7 @@
       <file leaf-file-name="CartListItem.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/CartListItem.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
+            <state relative-caret-position="260">
               <caret line="16" column="63" lean-forward="false" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="63" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -125,8 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>filter</find>
-      <find>conso</find>
       <find>loveIconLiked</find>
       <find>pic</find>
       <find>null</find>
@@ -155,6 +158,8 @@
       <find>renderCartList</find>
       <find>bind</find>
       <find>setProductCounter</find>
+      <find>setTo</find>
+      <find>navigate('cart')</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -201,7 +206,6 @@
         <option value="$PROJECT_DIR$/src/components/HomeOffers.js" />
         <option value="$PROJECT_DIR$/src/components/CategoriesProducts.js" />
         <option value="$PROJECT_DIR$/src/components/OfferDetails.js" />
-        <option value="$PROJECT_DIR$/src/components/Offers.js" />
         <option value="$PROJECT_DIR$/src/components/AllProducts.js" />
         <option value="$PROJECT_DIR$/App.js" />
         <option value="$PROJECT_DIR$/ReactotronConfig.js" />
@@ -216,9 +220,10 @@
         <option value="$PROJECT_DIR$/src/components/Thanks.js" />
         <option value="$PROJECT_DIR$/src/actions/CartAction.js" />
         <option value="$PROJECT_DIR$/src/components/RootStack.js" />
-        <option value="$PROJECT_DIR$/src/components/HomeProduct.js" />
         <option value="$PROJECT_DIR$/src/components/CartListItem.js" />
         <option value="$PROJECT_DIR$/src/components/Cart.js" />
+        <option value="$PROJECT_DIR$/src/components/Offers.js" />
+        <option value="$PROJECT_DIR$/src/components/HomeProduct.js" />
       </list>
     </option>
   </component>
@@ -292,6 +297,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -325,7 +331,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
@@ -336,7 +341,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/Music/counter" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="SearchEverywhereHistoryKey" value="HomePro&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;Home&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;Root&#9;FILE&#9;file:///root/Work/camy-com/src/components/RootStack.js&#10;Product.&#9;FILE&#9;file:///root/Work/camy-com/src/components/Product.js&#10;Cart&#9;FILE&#9;file:///root/Work/camy-com/src/components/Cart.js&#10;tha&#9;null&#9;null&#10;Payment&#9;FILE&#9;file:///root/Work/camy-com/src/components/ConfirmPayment.js&#10;homeP&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;Setting&#9;FILE&#9;file:///root/Work/camy-com/src/components/Settings.js&#10;Offer&#9;FILE&#9;file:///root/Work/camy-com/src/components/OfferDetails.js&#10;Product&#9;FILE&#9;file:///root/Work/camy-com/src/components/Product.js&#10;Products&#9;FILE&#9;file:///root/Work/camy-com/src/components/Products.js&#10;Main&#9;FILE&#9;file:///root/Work/camy-com/src/components/Maintenance.js&#10;Auth&#9;FILE&#9;file:///root/Work/camy-com/src/actions/AuthAction.js&#10;Fa&#9;FILE&#9;file:///root/Work/camy-com/src/components/Favorites.js&#10;App.js&#9;FILE&#9;file:///root/Work/camy-com/App.js&#10;Fav&#9;FILE&#9;file:///root/Work/camy-com/src/components/Favorites.js&#10;homePro&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;HomeOffer&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeOffers.js&#10;Related&#9;null&#9;null&#10;Drawer&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerHeader.js&#10;Produ&#9;FILE&#9;file:///root/Work/camy-com/src/components/Products.js&#10;I1&#9;FILE&#9;file:///root/Work/camy-com/local/i18n.js&#10;Login&#9;FILE&#9;file:///root/Work/camy-com/src/components/Login.js&#10;Ini&#9;FILE&#9;file:///root/Work/camy-com/src/components/InitialScreen.js&#10;OfferDe&#9;FILE&#9;file:///root/Work/camy-com/src/components/OfferDetails.js&#10;Sta&#9;FILE&#9;file:///root/Work/camy-com/src/components/RootStack.js&#10;Settin&#9;FILE&#9;file:///root/Work/camy-com/src/components/Settings.js&#10;Paymen&#9;FILE&#9;file:///root/Work/camy-com/src/components/Payment.js&#10;About&#9;FILE&#9;file:///root/Work/camy-com/src/components/About.js&#10;App&#9;FILE&#9;file:///root/Work/camy-com/App.js&#10;I18n&#9;FILE&#9;file:///root/Work/camy-com/local/i18n.js&#10;Sign&#9;null&#9;null&#10;Slider&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeSlider.js&#10;App,js&#9;null&#9;null&#10;Sett&#9;null&#9;null&#10;Dra&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerNvigator.js&#10;D&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerHeader.js&#10;I18&#9;FILE&#9;file:///root/Work/camy-com/local/i18n.js&#10;Pay&#9;FILE&#9;file:///root/Work/camy-com/src/components/Payment.js&#10;sha&#9;FILE&#9;file:///root/Work/camy-com/src/components/Share.js&#10;Drawe&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerNvigator.js&#10;Rate&#9;FILE&#9;file:///root/Work/camy-com/src/components/Rate.js&#10;Pro&#9;FILE&#9;file:///root/Work/camy-com/src/components/Product.js&#10;App.j&#9;FILE&#9;file:///root/Work/camy-com/App.js&#10;pack&#9;FILE&#9;file:///root/Work/camy-com/package.json&#10;Log&#9;FILE&#9;file:///root/Work/camy-com/src/components/Login.js&#10;Pr&#9;FILE&#9;file:///root/Work/camy-com/src/components/Products.js&#10;Profi&#9;FILE&#9;file:///root/Work/camy-com/src/components/Profile.js&#10;Logi&#9;FILE&#9;file:///root/Work/camy-com/src/components/Login.js" />
+    <property name="SearchEverywhereHistoryKey" value="offer&#9;FILE&#9;file:///root/Work/camy-com/src/components/Offers.js&#10;HomePro&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;Home&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;Root&#9;FILE&#9;file:///root/Work/camy-com/src/components/RootStack.js&#10;Product.&#9;FILE&#9;file:///root/Work/camy-com/src/components/Product.js&#10;Cart&#9;FILE&#9;file:///root/Work/camy-com/src/components/Cart.js&#10;tha&#9;null&#9;null&#10;Payment&#9;FILE&#9;file:///root/Work/camy-com/src/components/ConfirmPayment.js&#10;homeP&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;Setting&#9;FILE&#9;file:///root/Work/camy-com/src/components/Settings.js&#10;Offer&#9;FILE&#9;file:///root/Work/camy-com/src/components/OfferDetails.js&#10;Product&#9;FILE&#9;file:///root/Work/camy-com/src/components/Product.js&#10;Products&#9;FILE&#9;file:///root/Work/camy-com/src/components/Products.js&#10;Main&#9;FILE&#9;file:///root/Work/camy-com/src/components/Maintenance.js&#10;Auth&#9;FILE&#9;file:///root/Work/camy-com/src/actions/AuthAction.js&#10;Fa&#9;FILE&#9;file:///root/Work/camy-com/src/components/Favorites.js&#10;App.js&#9;FILE&#9;file:///root/Work/camy-com/App.js&#10;Fav&#9;FILE&#9;file:///root/Work/camy-com/src/components/Favorites.js&#10;homePro&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeProduct.js&#10;HomeOffer&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeOffers.js&#10;Related&#9;null&#9;null&#10;Drawer&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerHeader.js&#10;Produ&#9;FILE&#9;file:///root/Work/camy-com/src/components/Products.js&#10;I1&#9;FILE&#9;file:///root/Work/camy-com/local/i18n.js&#10;Login&#9;FILE&#9;file:///root/Work/camy-com/src/components/Login.js&#10;Ini&#9;FILE&#9;file:///root/Work/camy-com/src/components/InitialScreen.js&#10;OfferDe&#9;FILE&#9;file:///root/Work/camy-com/src/components/OfferDetails.js&#10;Sta&#9;FILE&#9;file:///root/Work/camy-com/src/components/RootStack.js&#10;Settin&#9;FILE&#9;file:///root/Work/camy-com/src/components/Settings.js&#10;Paymen&#9;FILE&#9;file:///root/Work/camy-com/src/components/Payment.js&#10;About&#9;FILE&#9;file:///root/Work/camy-com/src/components/About.js&#10;App&#9;FILE&#9;file:///root/Work/camy-com/App.js&#10;I18n&#9;FILE&#9;file:///root/Work/camy-com/local/i18n.js&#10;Sign&#9;null&#9;null&#10;Slider&#9;FILE&#9;file:///root/Work/camy-com/src/components/HomeSlider.js&#10;App,js&#9;null&#9;null&#10;Sett&#9;null&#9;null&#10;Dra&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerNvigator.js&#10;D&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerHeader.js&#10;I18&#9;FILE&#9;file:///root/Work/camy-com/local/i18n.js&#10;Pay&#9;FILE&#9;file:///root/Work/camy-com/src/components/Payment.js&#10;sha&#9;FILE&#9;file:///root/Work/camy-com/src/components/Share.js&#10;Drawe&#9;FILE&#9;file:///root/Work/camy-com/src/components/DrawerNvigator.js&#10;Rate&#9;FILE&#9;file:///root/Work/camy-com/src/components/Rate.js&#10;Pro&#9;FILE&#9;file:///root/Work/camy-com/src/components/Product.js&#10;App.j&#9;FILE&#9;file:///root/Work/camy-com/App.js&#10;pack&#9;FILE&#9;file:///root/Work/camy-com/package.json&#10;Log&#9;FILE&#9;file:///root/Work/camy-com/src/components/Login.js&#10;Pr&#9;FILE&#9;file:///root/Work/camy-com/src/components/Products.js&#10;Profi&#9;FILE&#9;file:///root/Work/camy-com/src/components/Profile.js" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RunDashboard">
@@ -433,11 +438,12 @@
       <workItem from="1542096195556" duration="34130000" />
       <workItem from="1542183457459" duration="21787000" />
       <workItem from="1542221868155" duration="530000" />
+      <workItem from="1542270657037" duration="561000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1051605000" />
+    <option name="totallyTimeSpent" value="1052166000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="26" width="1366" height="741" extended-state="6" />
@@ -445,17 +451,18 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="RNConsole" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25632912" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2572079" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26176023" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -469,7 +476,6 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -662,14 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Offers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="23" column="52" lean-forward="false" selection-start-line="23" selection-start-column="52" selection-end-line="23" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReactotronConfig.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="52">
@@ -795,7 +793,7 @@
         <state relative-caret-position="520">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -804,14 +802,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3250">
           <caret line="135" column="24" lean-forward="false" selection-start-line="124" selection-start-column="12" selection-end-line="135" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/HomeProduct.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6760">
-          <caret line="260" column="17" lean-forward="false" selection-start-line="260" selection-start-column="17" selection-end-line="260" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -860,7 +850,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/CartListItem.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
+        <state relative-caret-position="260">
           <caret line="16" column="63" lean-forward="false" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="63" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
@@ -870,8 +860,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Cart.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="223" column="30" lean-forward="true" selection-start-line="223" selection-start-column="30" selection-end-line="223" selection-end-column="30" />
+          <folding>
+            <marker date="1542271087000" expanded="true" signature="13912:13950" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Offers.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
-          <caret line="213" column="129" lean-forward="false" selection-start-line="213" selection-start-column="129" selection-end-line="213" selection-end-column="129" />
+          <caret line="75" column="95" lean-forward="false" selection-start-line="75" selection-start-column="95" selection-end-line="75" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/HomeProduct.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="165" column="43" lean-forward="true" selection-start-line="165" selection-start-column="43" selection-end-line="165" selection-end-column="43" />
           <folding />
         </state>
       </provider>

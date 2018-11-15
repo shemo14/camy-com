@@ -103,11 +103,7 @@ class HomeProduct extends Component{
                     }));
 
             }else{
-                Toast.show({
-                    text: I18n.t('plzLogin'),
-                    type: "danger",
-                    duration: 5000
-                });
+                this.props.navigation.navigate('login');
             }
 
     }
@@ -122,7 +118,6 @@ class HomeProduct extends Component{
             })
                 .then(response => {
                     this.setState({loading: false});
-                    this.props.navigation.navigate('cart')
                 })
         }else{
             this.setState({loading: true});
@@ -134,7 +129,6 @@ class HomeProduct extends Component{
                 })
                     .then(response => {
                         this.setState({loading: false});
-                        this.props.navigation.navigate('cart')
                     }));
         }
     }
@@ -168,7 +162,7 @@ class HomeProduct extends Component{
                 <CardItem style={products.textContainer}>
                     <View>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('product', { productDetails: this.props.data ,isLiked: isLiked, liked: this.state.isLiked })}>
-                            <Text style={products.productNameStyle}>{this.props.data.name.substring(0,18)}...</Text>
+                            <Text style={products.productNameStyle}>{this.props.data.name.substring(0,15)}...</Text>
                         </TouchableOpacity>
                         <Text style={products.productPrice}>{ this.props.data.discount } { I18n.t('sar') }</Text>
                         <Text style={products.productDiscount}>{ this.props.data.price } { I18n.t('sar') }</Text>

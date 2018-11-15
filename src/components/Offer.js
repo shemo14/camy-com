@@ -66,17 +66,7 @@ class Offer extends Component{
                         <Button onPress={() => this.props.navigation.navigate('offerBanars')}>
                             <Image style={{width: 27, height: 27}} source={require('../../assets/images/dsales1.png')}/>
                         </Button>
-                        <Button onPress={() => {
-                            if(this.props.user !== null){
-                                this.props.navigation.navigate('cart')
-                            }else{
-                                Toast.show({
-                                    text: I18n.t('plzLogin'),
-                                    type: "danger",
-                                    duration: 5000
-                                });
-                            }
-                        }}>
+                        <Button onPress={() => this.props.navigation.navigate('cart') }>
                             <Image style={{width: 27, height: 32}} source={require('../../assets/images/dcart.png')}/>
                         </Button>
                         <Button onPress={() => this.props.navigation.navigate('search')}>
