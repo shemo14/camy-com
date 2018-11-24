@@ -160,11 +160,6 @@ class Cart extends Component{
                         installation: response.data.installation,
                         listViewData: response.data.products
                     });
-                    rowMap[`${secId}${rowId}`].props.closeRow();
-                    let data = this.state.listViewData;
-                    data     = data.filter((item) => item.key !== productId);
-                    this.setState({ listViewData: data });
-                    this.forceUpdate();
                 })
                 .catch(error => console.log(error));
         } else {
@@ -179,15 +174,15 @@ class Cart extends Component{
                             listViewData: response.data.products,
                             lang: I18n.locale,
                         });
-                        rowMap[`${secId}${rowId}`].props.closeRow();
-                        let data = this.state.listViewData;
-                        data     = data.filter((item) => item.key !== productId);
-                        this.setState({ listViewData: data });
-                        this.forceUpdate();
                     })
                     .catch(error => console.log(error));
             });
         }
+
+        rowMap[`${secId}${rowId}`].props.closeRow();
+        const newData = [...this.state.listViewData];
+        newData.splice(rowId, 1);
+        this.setState({ listViewData: newData });
     }
 
     setOrder(){
