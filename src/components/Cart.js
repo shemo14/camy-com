@@ -145,6 +145,7 @@ class Cart extends Component{
 
 
     deleteRow(secId, rowId, rowMap, ProductData) {
+        this.setState({ loading: true });
         if (this.props.auth_user === null) {
             axios.post('https://shams.arabsdesign.com/camy/api/deleteFromLocalStorage', {
                 token: Expo.Constants.deviceId,
@@ -169,7 +170,7 @@ class Cart extends Component{
         } else {
             console.log('auth before delete', this.state.listViewData);
             AsyncStorage.getItem('user_id').then((user_id) => {
-                axios.post('https://shams.arabsdesign.com/camy/api/deleteFromCard', { user_id: user_id, product_id: data.id } )
+                axios.post('https://shams.arabsdesign.com/camy/api/deleteFromCard', { user_id: user_id, product_id: ProductData.id, lang: I18n.locale } )
                     .then(response => {
                         this.setState({
                             loading: false,

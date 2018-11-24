@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a9974d4-6d0f-4b63-96ed-55aac51d537f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ReactotronConfig.js" afterPath="$PROJECT_DIR$/ReactotronConfig.js" />
-      <change beforePath="$PROJECT_DIR$/local/i18n.js" afterPath="$PROJECT_DIR$/local/i18n.js" />
       <change beforePath="$PROJECT_DIR$/src/components/Cart.js" afterPath="$PROJECT_DIR$/src/components/Cart.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/CartListItem.js" afterPath="$PROJECT_DIR$/src/components/CartListItem.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/InitialScreen.js" afterPath="$PROJECT_DIR$/src/components/InitialScreen.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login.js" afterPath="$PROJECT_DIR$/src/components/Login.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductModel.js" afterPath="$PROJECT_DIR$/src/components/ProductModel.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/SignUp.js" afterPath="$PROJECT_DIR$/src/components/SignUp.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -90,12 +82,12 @@
       <file leaf-file-name="Cart.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Cart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-396">
-              <caret line="148" column="85" lean-forward="false" selection-start-line="148" selection-start-column="63" selection-end-line="148" selection-end-column="85" />
+            <state relative-caret-position="176">
+              <caret line="172" column="81" lean-forward="false" selection-start-line="172" selection-start-column="67" selection-end-line="172" selection-end-column="81" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <element signature="n#!!block;n#renderCartList#0;n#Cart#0" expanded="false" />
-                <element signature="e#15826#17282#0" expanded="false" />
+                <element signature="e#15894#17350#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -442,12 +434,12 @@
       <workItem from="1542785375308" duration="22937000" />
       <workItem from="1542863446123" duration="24191000" />
       <workItem from="1542952192793" duration="12904000" />
-      <workItem from="1543029093457" duration="11474000" />
+      <workItem from="1543029093457" duration="14893000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1153585000" />
+    <option name="totallyTimeSpent" value="1157004000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="26" width="1366" height="741" extended-state="6" />
@@ -883,12 +875,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Cart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-396">
-          <caret line="148" column="85" lean-forward="false" selection-start-line="148" selection-start-column="63" selection-end-line="148" selection-end-column="85" />
+        <state relative-caret-position="176">
+          <caret line="172" column="81" lean-forward="false" selection-start-line="172" selection-start-column="67" selection-end-line="172" selection-end-column="81" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
             <element signature="n#!!block;n#renderCartList#0;n#Cart#0" expanded="false" />
-            <element signature="e#15826#17282#0" expanded="false" />
+            <element signature="e#15894#17350#0" expanded="false" />
           </folding>
         </state>
       </provider>
