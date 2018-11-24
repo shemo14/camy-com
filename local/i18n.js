@@ -92,7 +92,20 @@ I18n.translations = {
         'allProduct': 'All Product',
         'lang': 'العربية',
         'copyRight': 'Design And Development By AAIT',
-        'edit' : 'Edit'
+        'edit' : 'Edit',
+        'createNewAccount': 'create a new account',
+        'fName' : 'first name',
+        'lName' : 'last name',
+        'createAccount': 'Create Account',
+        'youHaveAccount': 'You Already Have Account',
+        'passwordValid' : 'Password is required',
+        'fNameValid' : 'first name is required',
+        'lNameValid' : 'last name is required',
+        'phoneValid' : 'phone is required',
+        'emailValid' : 'email is required',
+        'passwordLength' : 'Password less than 6 characters',
+        'skip' : 'Skip',
+        'youNotHaveAccount' : 'if you don\'t have account'
     },
     ar: {
         'login': 'دخول',
@@ -183,7 +196,20 @@ I18n.translations = {
         'allProduct': 'كل المنتجات',
         'lang': 'English',
         'copyRight' : 'تصميم و برمجة اوامر الشبكة',
-        'edit' : 'تعديل'
+        'edit' : 'تعديل',
+        'createNewAccount': 'سجل حساب جديد',
+        'fName' : 'الاسم الاول',
+        'lName' : 'الاسم الاخير',
+        'createAccount': 'تسجيل',
+        'youHaveAccount': 'هل عندك حساب الفعل',
+        'passwordValid' : 'كلمه المرور مطلوبه',
+        'fNameValid' : 'الاسم الاول مطلوب',
+        'lNameValid' : 'الاسم الاخير مطلوب',
+        'phoneValid' : 'رقم الهاتف مطلوب',
+        'emailValid' : 'البريد الالكتروني مطلوب',
+        'passwordLength' : 'كلمة المرور اقل من ٦ احدف',
+        'skip' : 'تخطي',
+        'youNotHaveAccount' : 'لا تمتلك حساب'
     }
 };
 

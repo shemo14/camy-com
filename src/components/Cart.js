@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, Image, ListView, AsyncStorage} from 'react-native';
+import {View, Text, Image, ListView, AsyncStorage, RefreshControl } from 'react-native';
 import {Container, Header, Content, Button, Icon, List, Body, Left, CheckBox, DatePicker, Toast, Footer, FooterTab} from 'native-base';
 import CartListItem from './CartListItem';
 import { Row, Grid } from "react-native-easy-grid";
@@ -25,6 +25,7 @@ class Cart extends Component{
             liked: false,
             loading: true,
             installation: 0,
+            refreshing: false
         };
 
         this.setDate = this.setDate.bind(this);
@@ -40,21 +41,26 @@ class Cart extends Component{
         this.setState({ chosenDate: newDate });
     }
 
-    renderCartList(product_id, type) {
+    renderCartList(product_id, type, checked, install, product_price) {
         this.setState({loading: true});
         if (type === 'inc'){
             if (this.props.auth_user === null){
+                console.log('inc');
                 axios.post('https://shams.arabsdesign.com/camy/api/setInLocalStorage', {
                     product_id: product_id,
                     type: 'cart',
+                    lang: I18n.locale,
                     token: Expo.Constants.deviceId,
                     qty: 1
                 })
                     .then(response => {
+                        const total = checked ? this.state.total + install + product_price : this.state.total + product_price;
+                        console.log(this.state.total, install, product_price, total, response.data.total );
                         this.setState({
                             loading: false,
                             total: response.data.total,
-                            installation: response.data.installation
+                            installation: response.data.installation,
+                            listViewData: response.data.products,
                         });
                     })
             }else {
@@ -62,13 +68,17 @@ class Cart extends Component{
                     .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setToCart', {
                         user_id: user_id,
                         product_id: product_id,
-                        qty: 1
+                        qty: 1,
+                        lang: I18n.locale,
                     })
                         .then(response => {
+                            const total = checked ? this.state.total + install + product_price : this.state.total + product_price;
+                            console.log(this.state.total, install, product_price, total);
                             this.setState({
                                 loading: false,
                                 total: response.data.total,
-                                installation: response.data.installation
+                                installation: response.data.installation,
+                                listViewData: response.data.products,
                             });
                         }))
             }
@@ -77,17 +87,22 @@ class Cart extends Component{
                 axios.post('https://shams.arabsdesign.com/camy/api/deleteProductFromLocalStorage', {
                     token: Expo.Constants.deviceId,
                     product_id: product_id,
-                    type: 'cart'
+                    type: 'cart',
+                    lang: I18n.locale,
                 })
                     .then(response => {
-                        this.setState({ total: response.data.total, installation: response.data.installation, loading: false });
+                        const total = checked ? this.state.total - (install + product_price) : this.state.total - product_price;
+                        console.log(this.state.total, install, product_price, total);
+                        this.setState({ total: response.data.total , installation: response.data.installation, loading: false, listViewData: response.data.products, });
                     })
                     .catch(error => console.log(error));
             } else {
                 AsyncStorage.getItem('user_id').then((user_id) => {
-                    axios.post('https://shams.arabsdesign.com/camy/api/deleteOneProductFromCard', { user_id: user_id, product_id: product_id } )
+                    axios.post('https://shams.arabsdesign.com/camy/api/deleteOneProductFromCard', { user_id: user_id, product_id: product_id, lang: I18n.locale, } )
                         .then(response => {
-                            this.setState({ total: response.data.total, installation: response.data.installation, loading: false });
+                            const total = checked ? this.state.total - (install + product_price) : this.state.total - product_price;
+                            console.log(this.state.total, install, product_price, total);
+                            this.setState({ total: response.data.total, installation: response.data.installation, loading: false, listViewData: response.data.products });
                         })
                         .catch(error => console.log(error));
                 });
@@ -96,7 +111,12 @@ class Cart extends Component{
     }
 
     componentWillMount(){
+        this.renderCartData();
+    }
+
+    renderCartData(){
         if (this.props.auth_user === null){
+            console.log('this is componentWillMount');
             axios.get('https://shams.arabsdesign.com/camy/api/getLocalStorage/' + I18n.locale + '/' + Expo.Constants.deviceId + '/' + 'cart' )
                 .then(response => {
                     this.setState({
@@ -123,35 +143,46 @@ class Cart extends Component{
         }
     }
 
-    deleteRow(secId, rowId, rowMap, productId) {
-        rowMap[`${secId}${rowId}`].props.closeRow();
-        const newData = [...this.state.listViewData];
-        newData.splice(rowId, 1);
-        this.setState({ listViewData: newData });
 
+    deleteRow(secId, rowId, rowMap, ProductData) {
         if (this.props.auth_user === null) {
             axios.post('https://shams.arabsdesign.com/camy/api/deleteFromLocalStorage', {
                 token: Expo.Constants.deviceId,
-                product_id: productId,
-                type: 'cart'
+                product_id: ProductData.id,
+                type: 'cart',
+                lang: I18n.locale,
             })
-                .then(response => {
+                .then((response) => {
                     this.setState({
                         loading: false,
-                        total: response.data.total,
-                        installation: response.data.installation
+                        total: ProductData.install === 1 ? this.state.total - (ProductData.installation + (ProductData.price*ProductData.count)) : this.state.total - (ProductData.price*ProductData.count),
+                        installation: response.data.installation,
+                        listViewData: response.data.products
                     });
+                    rowMap[`${secId}${rowId}`].props.closeRow();
+                    let data = this.state.listViewData;
+                    data     = data.filter((item) => item.key !== productId);
+                    this.setState({ listViewData: data });
+                    this.forceUpdate();
                 })
                 .catch(error => console.log(error));
         } else {
+            console.log('auth before delete', this.state.listViewData);
             AsyncStorage.getItem('user_id').then((user_id) => {
-                axios.post('https://shams.arabsdesign.com/camy/api/deleteFromCard', { user_id: user_id, product_id: productId } )
+                axios.post('https://shams.arabsdesign.com/camy/api/deleteFromCard', { user_id: user_id, product_id: data.id } )
                     .then(response => {
                         this.setState({
                             loading: false,
-                            total: response.data.total,
-                            installation: response.data.installation
+                            total: ProductData.install === 1 ? this.state.total - (ProductData.installation + (ProductData.price*ProductData.count)) : this.state.total - (ProductData.price*ProductData.count),
+                            installation: response.data.installation,
+                            listViewData: response.data.products,
+                            lang: I18n.locale,
                         });
+                        rowMap[`${secId}${rowId}`].props.closeRow();
+                        let data = this.state.listViewData;
+                        data     = data.filter((item) => item.key !== productId);
+                        this.setState({ listViewData: data });
+                        this.forceUpdate();
                     })
                     .catch(error => console.log(error));
             });
@@ -189,7 +220,7 @@ class Cart extends Component{
                     leftOpenValue={75}
                     rightOpenValue={-75}
                     dataSource={this.ds.cloneWithRows(ListData)}
-                    renderRow={data => <CartListItem setProductCounter={(product_id, type) => this.renderCartList(product_id, type)} data={data}/>}
+                    renderRow={data => <CartListItem addInstall={(type, price) => this.addInstall(type, price, data.id)} setProductCounter={(product_id, type, checked, install, price) => this.renderCartList(product_id, type, checked, install, price)} data={data}/>}
 
                     renderRightHiddenRow={(data) =>
                         <Button full success onPress={_ => this.props.navigation.navigate('product', { productDetails: data ,isLiked: isLiked, liked: this.state.isLiked })}>
@@ -197,7 +228,7 @@ class Cart extends Component{
                         </Button>}
 
                     renderLeftHiddenRow={(data, secId, rowId, rowMap) =>
-                        <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data.id)}>
+                        <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
                             <Icon active name="trash"/>
                         </Button>}
                 />
@@ -211,7 +242,7 @@ class Cart extends Component{
                 leftOpenValue={75}
                 rightOpenValue={-75}
                 dataSource={this.ds.cloneWithRows(ListData)}
-                renderRow={data => <CartListItem setProductCounter={(product_id, type) => this.renderCartList(product_id, type)} data={data}/>}
+                renderRow={data => <CartListItem addInstall={(type, price) => this.addInstall(type, price, data.id)} setProductCounter={(product_id, type, checked, install, price) => this.renderCartList(product_id, type, checked, install, price)} data={data}/>}
 
                 renderRightHiddenRow={(data) =>
                     <Button full success onPress={_ => this.props.navigation.navigate('product', { productDetails: data ,isLiked: isLiked, liked: this.state.isLiked })}>
@@ -219,7 +250,7 @@ class Cart extends Component{
                     </Button>}
 
                 renderLeftHiddenRow={(data, secId, rowId, rowMap) =>
-                    <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data.id)}>
+                    <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
                         <Icon active name="trash"/>
                     </Button>}
             />
@@ -227,14 +258,29 @@ class Cart extends Component{
         );
     }
 
-    setInstallation(){
-        if(this.state.checked){
-            this.setState({ checked: false });
-            this.setState({ total : this.state.total - this.state.installation });
-        }else{
-            this.setState({ checked: true });
-            this.setState({ total : this.state.total + this.state.installation });
-        }
+    addInstall(type, price, product_id){
+        if (type === 'add')
+            this.setState({ total: this.state.total + price });
+        else
+            this.setState({ total: this.state.total - price });
+
+
+        this.setState({loading: true});
+        AsyncStorage.getItem('user_id')
+            .then(user_id => axios.post('https://shams.arabsdesign.com/camy/api/setInstallation', {
+                user_id: this.props.auth_user === null ? null : user_id,
+                product_id: product_id,
+                token: Expo.Constants.deviceId,
+                lang: I18n.locale,
+                type: type
+            })
+                .then(response => {
+                    this.setState({
+                        loading: false,
+                        installation: response.data.installation,
+                        listViewData: response.data.products,
+                    });
+                }))
     }
 
     render(){
@@ -261,12 +307,6 @@ class Cart extends Component{
                         </Row>
                         <Row size={25}>
                             <View style={styles.buyContainer}>
-                                <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Body style={{ flex: 0 }}>
-                                        <Text onPress={() => this.setInstallation()} style={{ color: '#000', fontWeight: '600', marginLeft: 10, marginRight: 10 }}>{ I18n.t('addInstallation') } ({ this.state.installation } { I18n.t('sar') })</Text>
-                                    </Body>
-                                    <CheckBox style={{ borderRadius: 3 }} checked={this.state.checked} onPress={() => this.setInstallation()} color="blue"/>
-                                </View>
                                 <DatePicker
                                     defaultDate={new Date()}
                                     minimumDate={new Date()}

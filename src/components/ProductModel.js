@@ -14,7 +14,6 @@ import {Like} from "../actions";
 import {connect} from "react-redux";
 
 
-
 class ProductModel extends Component {
     constructor(props){
         super(props);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Text, Image, TouchableOpacity, AsyncStorage} from 'react-native';
-import { ListItem, Input, Icon } from 'native-base';
+import {Text, Image, TouchableOpacity, AsyncStorage, View} from 'react-native';
+import { ListItem, Input, Icon, CheckBox, Body } from 'native-base';
 import { Col, Grid } from "react-native-easy-grid";
 import I18n from "../../local/i18n";
 import axios from "axios/index";
@@ -11,29 +11,59 @@ class CartListItem extends Component{
         super(props);
         this.state={
             count: this.props.data.count,
+            installation: this.props.data.installation,
             loading: false,
+            checked: false
         };
+    }
 
-        // this.returnCartCounter = this.returnCartCounter.bind(this);
+    setInstallation(){
+        if(this.props.data.install === 1){
+            this.setState({ checked: false });
+            this.props.addInstall('remove', this.props.data.installation);
+        }else{
+            this.setState({ checked: true });
+            this.props.addInstall('add', this.props.data.installation);
+        }
     }
 
     increaseProduct(){
-        this.props.setProductCounter(this.props.data.id, 'inc');
-        this.setState({
-            count: this.state.count + 1,
-        });
+        if (this.props.data.count < 5) {
+            // this.setState({ installation })
+            this.props.setProductCounter(this.props.data.id, 'inc', this.state.checked, (this.props.data.installation/this.props.data.count), this.props.data.price);
+        }
+
+        console.log(this.props.data.installation)
     }
 
     decreaseProduct(){
-        if (this.state.count > 1){
-            this.props.setProductCounter(this.props.data.id, 'dec');
-            this.setState({ count: this.state.count-1 })
+        if (this.props.data.count > 1){
+            this.props.setProductCounter(this.props.data.id, 'dec', this.state.checked, (this.props.data.installation/this.props.data.count), this.props.data.price);
         }
+
+        console.log(this.props.data.installation)
+    }
+
+    renderInstallation(){
+        if(this.props.data.installation > 0){
+            return(
+                <Col style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <Body style={{ flex: 0 }}>
+                        <Text onPress={ () => this.setInstallation()} style={{ color: '#000', fontWeight: '600', marginLeft: 10, marginRight: 10, marginBottom: 10 }}>تركيب</Text>
+                        </Body>
+                        <CheckBox style={{ borderRadius: 3 }} checked={this.props.data.install === 1 ? true : false} onPress={() => this.setInstallation()} color="blue"/>
+                        <Text onPress={ () => this.setInstallation()} style={{ color: '#000', fontWeight: '600', marginLeft: 10, marginRight: 10, marginTop: 10 }}>{this.props.data.installation} { I18n.t('sar') }</Text>
+                    </View>
+                </Col>
+            );
+        }
+
+        return <View/>;
     }
 
     render(){
         return(
-
             <ListItem style={styles.itemListStyle}>
                 <Loader loading={this.state.loading} />
                 <Grid>
@@ -44,11 +74,12 @@ class CartListItem extends Component{
                         <Text style={styles.productNameStyle}>{ this.props.data.name }</Text>
                         <Text style={styles.priceStyle}>{ this.props.data.price } { I18n.t('sar') }</Text>
                     </Col>
+                    { this.renderInstallation() }
                     <Col style={styles.qntyContainer}>
                         <TouchableOpacity onPress={() => this.increaseProduct()}>
                             <Icon name={'plus'} type={'Entypo'}/>
                         </TouchableOpacity>
-                        <Input disabled style={styles.inputStyle} value={JSON.stringify(this.state.count)} onChangeText={(count) => this.setState({ count }) }/>
+                        <Input disabled style={styles.inputStyle} value={JSON.stringify(this.props.data.count)} onChangeText={(count) => this.setState({ count }) }/>
                         <TouchableOpacity onPress={() => this.decreaseProduct()}>
                             <Icon name={'minus'} type={'Entypo'}/>
                         </TouchableOpacity>
@@ -71,8 +102,8 @@ const styles= {
     imageStyle: {
         maxWidth: 150,
         maxHeight: 150,
-        width: 100,
-        height: 100,
+        width: 70,
+        height: 70,
         borderWidth: 1,
         borderColor:'#ececed',
         margin: 5
@@ -83,7 +114,7 @@ const styles= {
         alignItems: 'center'
     },
     qntyContainer:{
-        flex: 1,
+        flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -102,7 +133,7 @@ const styles= {
         borderRadius: 5,
         textAlign: 'center',
         flex: 0.5,
-        height: 15,
+        height: 33,
         margin: 5,
     }
 };

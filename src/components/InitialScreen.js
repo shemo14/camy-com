@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { DangerZone } from "expo";
+import {I18nManager} from "react-native";
 
 
 class InitialScreen extends Component {
@@ -16,8 +17,10 @@ class InitialScreen extends Component {
     componentWillMount = async () => {
         const lang = await DangerZone.Localization.getCurrentLocaleAsync();
         if (this.props.lang === 'en'){
-            if(lang.substr(0, 2) === 'ar')
+            if(lang.substr(0, 2) === 'ar'){
+                I18nManager.forceRTL(false);
                 this.props.navigation.navigate('drawerNavigatorRight');
+            }
             else
                 this.props.navigation.navigate('drawerNavigator');
         }else if (this.props.lang === 'ar'){
