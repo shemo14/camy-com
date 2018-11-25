@@ -89,7 +89,7 @@ class OfferDetails extends Component{
         Share.share({
             title: data.name,
             url: 'https://shams.arabsdesign.com/camy/product/' + data.id,
-            message: data.desc
+            message: data.desc + '\n' + ' https://shams.arabsdesign.com/camy/product/' + data.id
         }, {
             dialogTitle: 'share this product',
             excludedActivityTypes: [

@@ -36,10 +36,6 @@ class Home extends Component {
             .then(response => this.setState({ categories: response.data.categories }))
             .catch(error => console.log(error));
 
-        BackHandler.addEventListener('hardwareBackPress', function() {
-            BackHandler.exitApp();
-        });
-
         I18n.locale = this.props.lang;
 
         if (this.props.lang === 'en' && this.props.dir === 'rtl' || this.props.lang === 'ar' && this.props.dir === 'lrt'){

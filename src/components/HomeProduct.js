@@ -77,10 +77,12 @@ class HomeProduct extends Component{
 
 
     onShare (data){
+        console.log(this.props.data.name, this.props.data);
+
         Share.share({
-            title: data.name,
+            title: this.props.data.name,
             url: 'https://shams.arabsdesign.com/camy/product/' + data.id,
-            message: data.desc
+            message: this.props.data.desc + '\n' + ' https://shams.arabsdesign.com/camy/product/' + data.id
         }, {
             dialogTitle: 'share this product',
             excludedActivityTypes: [

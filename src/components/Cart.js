@@ -51,7 +51,8 @@ class Cart extends Component{
                     type: 'cart',
                     lang: I18n.locale,
                     token: Expo.Constants.deviceId,
-                    qty: 1
+                    qty: 1,
+                    checked: checked
                 })
                     .then(response => {
                         const total = checked ? this.state.total + install + product_price : this.state.total + product_price;
@@ -70,6 +71,7 @@ class Cart extends Component{
                         product_id: product_id,
                         qty: 1,
                         lang: I18n.locale,
+                        checked: checked
                     })
                         .then(response => {
                             const total = checked ? this.state.total + install + product_price : this.state.total + product_price;
